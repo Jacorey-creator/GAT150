@@ -5,6 +5,9 @@
 #include "SpaceGame.h"
 #include "Audio/AudioSystem.h"
 #include "Renderer/ModelManager.h"
+#include <Framework/Components/SpriteComponent.h>
+#include <Framework/ResourceManager.h>
+#include <Framework/PhysicsComponent.h>
 
 void Player::Update(float dt)
 {
@@ -21,6 +24,10 @@ void Player::Update(float dt)
 	afro::vec2 forward = afro::vec2{ 0,-1 }.Rotate(m_transform.rotation);
 	m_transform.position += forward * m_speed * thrust * afro::g_time.GetDeltaTime();
 
+	auto physicComponent = GetComponent<afro::PhysicsComponent>();
+	physicComponent->ApplyForce(forward * m_speed * thrust);
+
+
 	m_transform.position.x = afro::Wrap(m_transform.position.x, (float)afro::g_renderer.GetWidth());
 	m_transform.position.y = afro::Wrap(m_transform.position.y, (float)afro::g_renderer.GetHeight());
 
@@ -31,9 +38,11 @@ void Player::Update(float dt)
 		//create weapon
 		
 		afro::Transform transform{m_transform.position, m_transform.rotation, 1 };
-		std::unique_ptr<Weapon> weapon = std::make_unique<Weapon>(400.0f,m_transform, afro::g_manager.Get("Energy_Ball.txt"));
+		std::unique_ptr<Weapon> weapon = std::make_unique<Weapon>(400.0f,m_transform);
 		
 		weapon->m_tag = "PlayerBullet";
+		std::unique_ptr<afro::SpriteComponent> component = std::make_unique<afro::SpriteComponent>();
+		component->m_texture = afro::g_resources.Get<afro::Texture>("bullet.png", afro::g_renderer);
 		m_scene->Add(std::move(weapon));
 		afro::g_audioSystem.PlayOneShot("hit",false);
 	}
@@ -43,7 +52,7 @@ void Player::OnCollision(Actor* other)
 {
 	Player* p = dynamic_cast<Player*>(other);
 	if (other->m_tag == "EnemyBullet") {
-		m_health - 1.0f;
+		m_health -= 1.0f;
 		if (m_health <= 0) { m_destroyed = true; }
 
 		m_game->SetLives(m_game->GetLives() - 1);

@@ -1,5 +1,3 @@
-
-
 #include "Core/Core.h"
 #include "Renderer/Renderer.h"
 #include "Renderer/ModelManager.h"
@@ -11,13 +9,15 @@
 #include "Enemy.h"
 #include "Framework/Scene.h"
 #include "Renderer/ParticleSystem.h"
-
+#include "Renderer/Texture.h"
 #include "SpaceGame.h"
-
+#include "Framework/ResourceManager.h"
 #include <iostream>
 #include <vector>
 #include <thread>
 #include <Renderer/Emitter.h>
+#include  <cassert>
+#include <array>
 
 
 
@@ -41,15 +41,32 @@ public:
 	afro::Vector2 m_vel;
 };
 
+void zero(int v)
+{
+	v = 0;
+}
+void zero(int* v)
+{
+	*v = 0;
+}
+void zero_ref(const int& v)
+{
+	std::cout << v << std::endl;
+}
 
 int main(int argc, char* argv[]) 
 {
+	int i = 5;
+	zero_ref(5);
+	std::cout << i << std::endl;
+
+
+	INFO_LOG("Initialize Engine");
+
 	afro::MemoryTracker::Initialize();
 	afro::seed_random((unsigned int)time(nullptr));
 	afro::setFilePath("Assets");
-	//std::unique_ptr<int> up = std::make_unique<int>(10);
-	//int m = afro::Max(4.0f, 3.0f);
-	//int m2 = afro::Max(4, 3);
+
 
 	afro::g_renderer.Initialize();
 	afro::g_renderer.CreateWindow("CSC196", 800, 600);
@@ -61,8 +78,7 @@ int main(int argc, char* argv[])
 	game->Initialize();
 
 
-	/*afro::vec2 v{5, 5};
-	v.Normalize();*/
+	
 
 	std::vector<Star> stars;
 	for (int i = 0; i < 100; i++)
@@ -76,6 +92,10 @@ int main(int argc, char* argv[])
 	float speed = 200;
 	constexpr float turnRate = afro::DegreesToRadians(180);
 
+	// create texture
+	res_t<afro::Texture> texture = afro::g_resources.Get<afro::Texture>("ship.png", afro::g_renderer);
+	texture->Load("Space_Guy.png", g_renderer);
+
 	//main game loop
 	bool quit = false;
 	while (!quit)
@@ -85,9 +105,6 @@ int main(int argc, char* argv[])
 		if(afro::g_inputSystem.GetMouseButtonDown(SDL_BUTTON(1))) std::cout << "Middle Mouse Button" << afro::g_inputSystem.GetMousePosition().x << "," << afro::g_inputSystem.GetMousePosition().y << std::endl;
 		if(afro::g_inputSystem.GetMouseButtonDown(SDL_BUTTON(2))) std::cout << "Right Mouse Button" << afro::g_inputSystem.GetMousePosition().x << "," << afro::g_inputSystem.GetMousePosition().y << std::endl;
 		
-	
-		
-
 
 		// update engine
 		afro::g_time.Tick();
@@ -114,6 +131,7 @@ int main(int argc, char* argv[])
 			afro::g_renderer.SetColor(afro::random(256), afro::random(256), afro::random(256), 255);
 			afro::g_renderer.DrawPoint(star.m_pos.x, star.m_pos.y);
 		}
+		afro::g_renderer.DrawTexture(texture.get(), 0, 0, 0.0f);
 		game->Draw(afro::g_renderer);
 
 		afro::g_particleSystem.Draw(g_renderer);

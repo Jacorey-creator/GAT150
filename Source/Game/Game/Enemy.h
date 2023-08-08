@@ -4,8 +4,8 @@
 class Enemy : public afro::Actor
 {
 public:
-	Enemy(float speed, float turnRate, const afro::Transform& transform, std::shared_ptr<afro::Model> model) :
-		Actor{ transform,model },
+	Enemy(float speed, float turnRate, const afro::Transform& transform) :
+		Actor{ transform },
 		m_speed{ speed },
 		m_turnRate{ turnRate }
 	{

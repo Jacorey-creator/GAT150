@@ -2,22 +2,28 @@
 #include "SpaceGame.h"
 #include "Player.h"
 #include "Enemy.h"
-
+#include "Renderer/Texture.h"
 #include "Framework/Scene.h"
 #include "Renderer/Emitter.h"
+#include "Framework/Framework.h"
 
 #include "Audio/AudioSystem.h"
 #include "Input/Input.h"
 #include "Renderer/Renderer.h"
 #include "Renderer/Text.h"
 #include "Renderer/ModelManager.h"
+
+
+#include "Framework/ResourceManager.h"
+#include "Framework/Components/EnginePhysicsComponent.h"
 using namespace afro;
 
 
 bool SpaceGame::Initialize()
 {
 	//create font
-	m_font = std::make_unique<afro::Font>("Wedgie Regular.ttf", 30);
+	m_font = afro::g_resources.Get<afro::Font>("Wedgie Regular.ttf", 30);
+	
 	m_titletext = std::make_unique<afro::Text>(m_font);
 	m_titletext->Create(afro::g_renderer, "Galaxy Intruders", afro::Color{ 1, 1, 1, 1 });
 
@@ -67,7 +73,7 @@ void SpaceGame::Update(float dt)
 	{
 	case eState::Title:
 		afro::g_audioSystem.PlayOneShot("space", true);
-		if (afro::g_inputSystem.GetKeyDown(SDL_SCANCODE_SPACE)) { m_state = eState::StartLevel; }
+		if (afro::g_inputSystem.GetKeyDown(SDL_SCANCODE_SPACE)) { m_state = eState::StartGame; }
 		break;
 	case eState::StartGame:
 		m_score = 0;
@@ -82,17 +88,22 @@ void SpaceGame::Update(float dt)
 				
 				if (m_entities >= 1) { break; }
 				std::unique_ptr<Enemy> enemy = std::make_unique<Enemy>(afro::randomf(75.0f, 150.0f), afro::Pi, afro::Transform{ {afro::randomf(100.0f, 300.0f), afro::randomf(500.0f, 250.0f)},
-				afro::randomf(afro::TwoPi), 3}, afro::g_manager.Get("cooler_ship.txt"));
+				afro::randomf(afro::TwoPi), 3});
 				enemy->m_tag = "Enemy";
 				enemy->m_game = this;
 				m_scene->Add(std::move(enemy));
 				m_entities++;
+				//Create Components
+				std::unique_ptr<afro::SpriteComponent> component = std::make_unique<afro::SpriteComponent>();
+				component->m_texture = afro::g_resources.Get<afro::Texture>("Space_Guy.png", afro::g_renderer);
+				m_scene->Add(std::move(enemy));
 				
 				if (m_score >= 100 ) {
 					std::unique_ptr<Enemy> enemy_2 = std::make_unique<Enemy>(afro::randomf(60.0f, 450.0f), afro::Pi, afro::Transform{ {afro::randomf(100.0f, 300.0f),
-						afro::randomf(50.0f, 70.0f)}, afro::randomf(afro::TwoPi), 7}, afro::g_manager.Get("Big_Ship.txt"));
+						afro::randomf(50.0f, 70.0f)}, afro::randomf(afro::TwoPi), 7});
 					enemy_2->m_tag = "Enemy";
 					enemy_2->m_game = this;
+					enemy->AddComponent(std::move(component));
 					m_scene->Add(std::move(enemy_2));
 				}
 		}
@@ -103,11 +114,20 @@ void SpaceGame::Update(float dt)
 		m_entities = 0;
 		afro::Game::SetLives(1);
 		{
-			std::unique_ptr<Player> player = std::make_unique<Player>(200.0f, afro::Pi, afro::Transform{ {400, 300}, 0, 6 }, afro::g_manager.Get("ship.txt"));
+			//Create player
+			std::unique_ptr<Player> player = std::make_unique<Player>(200.0f, afro::Pi, afro::Transform{ {400, 300}, 0, 6 });
 			player->m_tag = "Player";
 			player->m_game = this;
-
+			//Create Components
+			std::unique_ptr<afro::SpriteComponent> component = std::make_unique<afro::SpriteComponent>();
+			component->m_texture = afro::g_resources.Get<afro::Texture>("Space_Guy.png", afro::g_renderer);
+			player->AddComponent(std::move(component));
 			m_scene->Add(std::move(player));
+
+			auto physicscomponent = std::make_unique<afro::EnginePhysicsComponent>();
+			physicscomponent->m_damping = 0.9f;
+			player->AddComponent(std::move(physicscomponent));
+
 		}
 		m_state = eState::Game;
 		break;

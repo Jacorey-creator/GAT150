@@ -4,8 +4,8 @@
 class Player : public afro::Actor
 {
 public:
-	Player(float speed, float turnRate, const afro::Transform& transform, std::shared_ptr<afro::Model> model) :
-		Actor{ transform,model },
+	Player(float speed, float turnRate, const afro::Transform& transform) :
+		Actor{ transform},
 		m_speed{ speed },
 		m_turnRate{ turnRate }
 	{}

@@ -9,4 +9,5 @@ namespace afro
 	bool readFile(const std::filesystem::path& path, std::string& buffer);
 	bool setFilePath(const std::filesystem::path& path);
 	std::string getFilePath();
+	std::string getFileName(const std::filesystem::path& path);
 }

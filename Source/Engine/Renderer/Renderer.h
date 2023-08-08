@@ -1,4 +1,10 @@
 #pragma once
+#include "Font.h"
+#include "Model.h"
+#include "Particle.h"
+#include "ParticleSystem.h"
+#include "Text.h"
+#include "Texture.h"
 #include <string>
 #include <../ThirdParty/SDL2-2.28.0/include/SDL.h>
 
@@ -22,6 +28,7 @@ namespace afro
 		void DrawLine(float x1, float y1, float x2, float y2);
 		void DrawPoint(int x, int y);
 		void DrawPoint(float x, float y);
+		void DrawTexture(class Texture* texture, float x, float y, float angle = 0.0f);
 
 		int GetWidth()const { return m_width; }
 		int GetHeight()const { return m_height; }
@@ -33,6 +40,8 @@ namespace afro
 		SDL_Window* m_window = nullptr;
 
 		friend class Text;
+		friend class Texture;
+
 	};
 
 	extern Renderer g_renderer;

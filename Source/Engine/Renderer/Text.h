@@ -4,6 +4,9 @@
 #include "Core/Color.h"
 #include <string>
 #include <memory>
+
+struct SDL_Texture;
+
 namespace afro
 {
 	class Text
@@ -19,6 +22,6 @@ namespace afro
 		friend class Renderer;
 	private:
 		std::shared_ptr<afro::Font> m_font;
-		struct SDL_Texture* m_texture = nullptr;
+		SDL_Texture* m_texture = nullptr;
 	};
 }

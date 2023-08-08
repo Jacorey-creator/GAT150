@@ -1,5 +1,8 @@
 #include "Renderer.h"
+#include "Texture.h"
+#include "SDL2-2.28.0/include/SDL_image.h"
 #include "SDL2-2.28.0/include/SDL_ttf.h"
+#include <Core/Vector2.h>
 
 
 namespace afro
@@ -10,6 +13,10 @@ namespace afro
 	 {
 		 SDL_Init(SDL_INIT_VIDEO);
 		 TTF_Init();
+
+		 SDL_Init(SDL_INIT_VIDEO);
+		 IMG_Init(IMG_INIT_JPG | IMG_INIT_PNG);
+		 TTF_Init();
 		 return true;
 	 }
 
@@ -18,6 +25,9 @@ namespace afro
 		 SDL_DestroyRenderer(m_renderer);
 		 SDL_DestroyWindow(m_window);
 		 TTF_Quit();
+
+		 TTF_Quit();
+		 IMG_Quit();
 	 }
 
 	void afro::Renderer::CreateWindow(const std::string& title, int width, int height)
@@ -63,5 +73,15 @@ namespace afro
 	{
 		SDL_RenderDrawPoint(m_renderer, x, y);
 
+	}
+	void Renderer::DrawTexture(Texture* texture, float x, float y, float angle)
+	{
+		vec2 size = GetHeight();
+		SDL_Rect dest{};
+			dest.x = (int)(x-(size.x * 0.5f));
+			dest.y = (int)(y - (size.y * 0.5f));
+			dest.w = (int)size.x;
+			dest.h = (int)size.y;
+		 SDL_RenderCopyEx(m_renderer, texture->m_texture,NULL,NULL,angle,NULL,SDL_RendererFlip::SDL_FLIP_NONE);
 	}
 }

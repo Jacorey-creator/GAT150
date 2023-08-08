@@ -1,4 +1,6 @@
 #include "ParticleSystem.h"
+#include "Renderer.h"
+
 
 namespace afro {
 	ParticleSystem g_particleSystem(1000);

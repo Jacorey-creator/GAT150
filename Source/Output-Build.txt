@@ -1,0 +1,8 @@
+﻿Build started...
+1>------ Build started: Project: Framework, Configuration: Debug x64 ------
+1>Resource.cpp
+1>ResourceManager.cpp
+1>Generating Code...
+1>Framework.vcxproj -> C:\Users\jrowe\source\repos\GAT150\Bin\x64\Debug\Framework\Framework.lib
+========== Build: 1 succeeded, 0 failed, 0 up-to-date, 0 skipped ==========
+========== Build started at 2:54 PM and took 01.360 seconds ==========

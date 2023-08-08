@@ -1,10 +1,16 @@
 #include "Fileio.h"
+#include "Logger.h"
 #include <fstream>
+#include <iostream>
 namespace afro
 {
 	std::string getFilePath()
 	{
 		return std::filesystem::current_path().string();
+	}
+	std::string getFileName(const std::filesystem::path& path)
+	{
+		return path.filename().string();
 	}
 	bool setFilePath(const std::filesystem::path& path)
 	{
@@ -30,11 +36,17 @@ namespace afro
 
 	bool readFile(const std::filesystem::path& path, std::string& buffer)
 	{
-		if (!fileExists(path)) return false;
-
+		if (!fileExists(path))
+		{
+			WARNING_LOG("file not loaded: " << path.string());
+			return false;
+		}
 		size_t size;
-		if (!getFileSize(path, size)) return false;
-
+		if (!getFileSize(path, size))
+		{
+			std::cout << "file not found: " << path << std::endl;
+			return false;
+		}
 		buffer.resize(size);
 		std::ifstream stream(path);
 		stream.read(buffer.data(), size);

@@ -5,6 +5,9 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
+    <Filter Include="Math">
+      <UniqueIdentifier>{40800cf5-3a26-48d4-8a97-b946faac6d6d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Random.h" />
@@ -28,6 +31,12 @@
     <ClInclude Include="Color.h">
       <Filter>Source</Filter>
     </ClInclude>
+    <ClInclude Include="Logger.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector3.h">
+      <Filter>Math</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FileIO.cpp">
@@ -40,6 +49,9 @@
       <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="Transform.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Logger.cpp">
       <Filter>Source</Filter>
     </ClCompile>
   </ItemGroup>

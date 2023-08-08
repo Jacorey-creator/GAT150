@@ -1,4 +1,5 @@
 #include "Particle.h"
+#include "Renderer.h"
 
 namespace afro {
 	void afro::Particle::Update(float dt)

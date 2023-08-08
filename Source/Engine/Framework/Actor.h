@@ -1,6 +1,7 @@
 #pragma once
 #include "Core/Core.h"
 #include "Renderer/Model.h"
+#include "Components.h"
 #include <memory>
 namespace afro
 {
@@ -8,20 +9,23 @@ namespace afro
 	{
 	public:
 		Actor() = default;
-		Actor(const afro::Transform transform, std::shared_ptr<Model> model) :
-			m_transform{ transform },
-			m_model{ model } {}
 		Actor(const afro::Transform transform) :
 			m_transform{ transform }
 		{}
 
 		virtual void Update(float dt);
 		virtual void Draw(afro::Renderer& renderer);
-		float GetRadius() { return (m_model) ? m_model->GetRadius() * m_transform.scale : -10000; }
+
+		void AddComponent(std::unique_ptr<Component>component);
+		template<typename T>
+		T* GetComponent();
+
+		float GetRadius() { return 30.0f; }
 		virtual void OnCollision(Actor* other) {}
 
 		class Scene* m_scene = nullptr;
 		friend class Scene;
+		friend class Components;
 
 		class Game* m_game = nullptr;
 
@@ -32,10 +36,21 @@ namespace afro
 		float m_lifespan = -1.0f;
 
 	protected:
+		std::vector<std::unique_ptr< Component>> m_components;
 		bool m_destroyed = false;
 
-		std::shared_ptr<Model> m_model;
 	};
 
+
+	template<typename T>
+	inline T* Actor::GetComponent()
+	{
+		for (auto& component : m_components)
+		{
+			T* result = dynamic_cast<T*>(component.get());
+			if (result) return result;
+		}
+		return nullptr;
+	}
 
 }

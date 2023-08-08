@@ -1,5 +1,4 @@
 #pragma once
-#include "Renderer.h"
 #include "Particle.h"
 #include <vector>
 
@@ -14,7 +13,7 @@ namespace afro
 			m_particles.resize(maxCount);
 		}
 		void Update(float dt);
-		void Draw(Renderer& renderer);
+		void Draw(class Renderer& renderer);
 		Particle* GetFreeParticle();
 	private:
 		std::vector<Particle> m_particles;

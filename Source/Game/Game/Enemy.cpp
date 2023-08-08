@@ -6,6 +6,8 @@
 #include "Game/SpaceGame.h"
 #include "Renderer/ModelManager.h"
 #include <Renderer/Emitter.h>
+#include <Framework/Components/SpriteComponent.h>
+#include <Framework/ResourceManager.h>
 
 void Enemy::Update(float dt)
 {
@@ -39,8 +41,10 @@ void Enemy::Update(float dt)
 		//create weapon
 
 		afro::Transform transform{m_transform.position, m_transform.rotation, 0.5f };
-		std::unique_ptr<Weapon> weapon = std::make_unique<Weapon>(400.0f, m_transform, afro::g_manager.Get("Laser.txt"));
+		std::unique_ptr<Weapon> weapon = std::make_unique<Weapon>(400.0f, m_transform);
 		weapon->m_tag = "EnemyBullet";
+		std::unique_ptr<afro::SpriteComponent> component = std::make_unique<afro::SpriteComponent>();
+		component->m_texture = afro::g_resources.Get<afro::Texture>("bullet.png", afro::g_renderer);
 		m_scene->Add(std::move(weapon));
 		m_fireTimer = m_fireRate;
 	}

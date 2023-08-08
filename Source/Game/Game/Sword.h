@@ -4,8 +4,8 @@
 class Weapon : public afro::Actor
 {
 public:
-	Weapon(float speed, const afro::Transform& transform, std::shared_ptr<afro::Model> model) :
-		Actor{ transform,model },
+	Weapon(float speed, const afro::Transform& transform) :
+		Actor{ transform },
 		m_speed{ speed }
 	{
 		m_lifespan = 2.0f;
