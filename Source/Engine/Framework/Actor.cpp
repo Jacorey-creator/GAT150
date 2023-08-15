@@ -1,6 +1,7 @@
 #include "Actor.h"
 #include "Component/RenderComponent.h"
 namespace afro {
+	
 	void Actor::Update(float dt)
 	{
 		if (m_lifespan != -1.0f) 
@@ -21,10 +22,9 @@ namespace afro {
 	{
 		for (auto& component : m_components) 
 		{
-			if (dynamic_cast<RenderComponent*>(component.get()))
-			{
-				dynamic_cast<RenderComponent*>(component.get())->Draw(renderer);
-			}
+			RenderComponent* renderercomponent = dynamic_cast<RenderComponent*>(component.get());
+
+			if (renderercomponent) { renderercomponent->Draw(renderer); }
 		}
 	}
 	void Actor::AddComponent(std::unique_ptr<Component> component)
@@ -32,5 +32,21 @@ namespace afro {
 		component->m_owner = this;
 		
 		m_components.push_back(std::move(component));
+	}
+
+	bool Actor::Initialize()
+	{
+		for (auto& component : m_components)
+		{
+			component->Initialize();
+		}
+		return true;
+	}
+	void Actor::OnDestroy()
+	{
+		for (auto& component : m_components)
+		{
+			component->OnDestroy();
+		}
 	}
 }

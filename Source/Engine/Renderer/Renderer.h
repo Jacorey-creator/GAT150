@@ -29,6 +29,7 @@ namespace afro
 		void DrawPoint(int x, int y);
 		void DrawPoint(float x, float y);
 		void DrawTexture(class Texture* texture, float x, float y, float angle = 0.0f);
+		void DrawTexture(class Texture* texture, const Transform& transform);
 
 		int GetWidth()const { return m_width; }
 		int GetHeight()const { return m_height; }

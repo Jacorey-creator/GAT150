@@ -1,13 +1,15 @@
 #pragma once
+#include "Framework/Object.h"
 
 namespace afro
 {
-	class Component
+	class Component : public Object
 	{
 	public:
 		virtual void Update(float dt) = 0;
 		friend class Actor;
-	protected:
+
+	public:
 		class Actor* m_owner = nullptr;
 	};
 }

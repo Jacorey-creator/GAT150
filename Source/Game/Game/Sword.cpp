@@ -11,6 +11,24 @@ void Weapon::Update(float dt)
 	m_transform.position.y = afro::Wrap(m_transform.position.y, (float)afro::g_renderer.GetHeight());
 }
 
+bool Weapon::Initialize()
+{
+	Actor::Initialize();
+
+	m_physicsComponent = GetComponent<afro::PhysicsComponent>();
+	auto collisionComponent = GetComponent<afro::CollisionComponent>();
+	if (collisionComponent)
+	{
+		auto renderComponent = GetComponent<afro::RenderComponent>();
+		if (renderComponent)
+		{
+		float scale = m_transform.scale;
+		collisionComponent->m_radius = GetComponent<afro::RenderComponent>()->GetRadius();
+		}
+	}
+	return true;
+}
+
 void Weapon::OnCollision(Actor* other)
 {
 	if (other->m_tag != m_tag) {

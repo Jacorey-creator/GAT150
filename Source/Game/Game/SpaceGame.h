@@ -1,9 +1,8 @@
 #pragma once
 #include "Framework/Game.h"
-#include <Renderer/Font.h>
-#include <Renderer/Text.h>
+#include "Renderer/Text.h"
 
-class SpaceGame : public afro::Game
+class SpaceGame : public afro:: Game
 {
 public:
 	enum eState
@@ -41,4 +40,5 @@ private:
 	std::unique_ptr<afro::Text> m_titletext;
 	std::unique_ptr<afro::Text> m_gameovertext;
 	std::unique_ptr<afro::Text> m_deathtext;
+
 };

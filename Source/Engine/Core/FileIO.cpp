@@ -51,6 +51,8 @@ namespace afro
 		std::ifstream stream(path);
 		stream.read(buffer.data(), size);
 		stream.close();
+
+		return true;
 	}
 
 }

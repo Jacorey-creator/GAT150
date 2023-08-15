@@ -44,10 +44,27 @@ void Enemy::Update(float dt)
 		std::unique_ptr<Weapon> weapon = std::make_unique<Weapon>(400.0f, m_transform);
 		weapon->m_tag = "EnemyBullet";
 		std::unique_ptr<afro::SpriteComponent> component = std::make_unique<afro::SpriteComponent>();
-		component->m_texture = afro::g_resources.Get<afro::Texture>("bullet.png", afro::g_renderer);
+		component->m_texture = GET_RESOURCE(afro::Texture,"bullet.png", afro::g_renderer);
 		m_scene->Add(std::move(weapon));
 		m_fireTimer = m_fireRate;
 	}
+}
+
+bool Enemy::Initialize()
+{
+	Actor::Initialize();
+
+	auto collisionComponent = GetComponent<afro::CollisionComponent>();
+	if (collisionComponent)
+	{
+		auto renderComponent = GetComponent<afro::RenderComponent>();
+		if (renderComponent)
+		{
+		float scale = m_transform.scale;
+		collisionComponent->m_radius = GetComponent<afro::RenderComponent>()->GetRadius();
+		}
+	}
+	return true;
 }
 
 void Enemy::OnCollision(Actor* other)

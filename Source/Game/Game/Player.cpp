@@ -8,6 +8,9 @@
 #include <Framework/Components/SpriteComponent.h>
 #include <Framework/ResourceManager.h>
 #include <Framework/PhysicsComponent.h>
+#include <Framework/Components/CircleCollisionComponent.h>
+
+
 
 void Player::Update(float dt)
 {
@@ -24,8 +27,8 @@ void Player::Update(float dt)
 	afro::vec2 forward = afro::vec2{ 0,-1 }.Rotate(m_transform.rotation);
 	m_transform.position += forward * m_speed * thrust * afro::g_time.GetDeltaTime();
 
-	auto physicComponent = GetComponent<afro::PhysicsComponent>();
-	physicComponent->ApplyForce(forward * m_speed * thrust);
+	//auto physicComponent = GetComponent<afro::PhysicsComponent>();
+	m_physicsComponent->ApplyForce(forward * m_speed * thrust);
 
 
 	m_transform.position.x = afro::Wrap(m_transform.position.x, (float)afro::g_renderer.GetWidth());
@@ -42,10 +45,33 @@ void Player::Update(float dt)
 		
 		weapon->m_tag = "PlayerBullet";
 		std::unique_ptr<afro::SpriteComponent> component = std::make_unique<afro::SpriteComponent>();
-		component->m_texture = afro::g_resources.Get<afro::Texture>("bullet.png", afro::g_renderer);
+		component->m_texture = GET_RESOURCE(afro::Texture, "bullet.png", afro::g_renderer);
+
+		auto collisionComponent = std::make_unique<afro::CircleCollisionComponent>();
+		collisionComponent->m_radius = 30.0f;
+		weapon->AddComponent(std::move(collisionComponent));
 		m_scene->Add(std::move(weapon));
 		afro::g_audioSystem.PlayOneShot("hit",false);
 	}
+
+}
+
+bool Player::Initialize()
+{
+	Actor::Initialize();
+
+	m_physicsComponent = GetComponent<afro::PhysicsComponent>();
+	auto collisionComponent = GetComponent<afro::CollisionComponent>();
+	if (collisionComponent)
+	{
+		auto renderComponent = GetComponent<afro::RenderComponent>();
+		if (renderComponent) 
+		{
+		float scale = m_transform.scale;
+		collisionComponent->m_radius = GetComponent<afro::RenderComponent>()->GetRadius();
+		}
+	}
+	return true;
 }
 
 void Player::OnCollision(Actor* other)

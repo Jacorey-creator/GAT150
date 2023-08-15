@@ -41,32 +41,23 @@ public:
 	afro::Vector2 m_vel;
 };
 
-void zero(int v)
-{
-	v = 0;
-}
-void zero(int* v)
-{
-	*v = 0;
-}
-void zero_ref(const int& v)
-{
-	std::cout << v << std::endl;
-}
+
+
+
 
 int main(int argc, char* argv[]) 
 {
-	int i = 5;
-	zero_ref(5);
-	std::cout << i << std::endl;
 
+	Factory::Singleton::Instance().Register<afro::SpriteComponent>("SpriteComponent");
 
 	INFO_LOG("Initialize Engine");
 
 	afro::MemoryTracker::Initialize();
 	afro::seed_random((unsigned int)time(nullptr));
 	afro::setFilePath("Assets");
-
+	//json
+	rapidjson::Document document;
+	afro::Json::Load("json.txt", document);
 
 	afro::g_renderer.Initialize();
 	afro::g_renderer.CreateWindow("CSC196", 800, 600);
@@ -93,17 +84,17 @@ int main(int argc, char* argv[])
 	constexpr float turnRate = afro::DegreesToRadians(180);
 
 	// create texture
-	res_t<afro::Texture> texture = afro::g_resources.Get<afro::Texture>("ship.png", afro::g_renderer);
-	texture->Load("Space_Guy.png", g_renderer);
+	res_t<afro::Texture> texture = GET_RESOURCE(afro::Texture, "ship.png", afro::g_renderer);
+	texture->Load("Guy.png", g_renderer);
 
 	//main game loop
 	bool quit = false;
 	while (!quit)
 	{
-		afro::g_inputSystem.GetMousePosition();
-		if(afro::g_inputSystem.GetMouseButtonDown(SDL_BUTTON(0))) std::cout << "Left Mouse Button" << afro::g_inputSystem.GetMousePosition().x << "," << afro::g_inputSystem.GetMousePosition().y << std::endl;
-		if(afro::g_inputSystem.GetMouseButtonDown(SDL_BUTTON(1))) std::cout << "Middle Mouse Button" << afro::g_inputSystem.GetMousePosition().x << "," << afro::g_inputSystem.GetMousePosition().y << std::endl;
-		if(afro::g_inputSystem.GetMouseButtonDown(SDL_BUTTON(2))) std::cout << "Right Mouse Button" << afro::g_inputSystem.GetMousePosition().x << "," << afro::g_inputSystem.GetMousePosition().y << std::endl;
+		//afro::g_inputSystem.GetMousePosition();
+		//if(afro::g_inputSystem.GetMouseButtonDown(SDL_BUTTON(0))) std::cout << "Left Mouse Button" << afro::g_inputSystem.GetMousePosition().x << "," << afro::g_inputSystem.GetMousePosition().y << std::endl;
+		//if(afro::g_inputSystem.GetMouseButtonDown(SDL_BUTTON(1))) std::cout << "Middle Mouse Button" << afro::g_inputSystem.GetMousePosition().x << "," << afro::g_inputSystem.GetMousePosition().y << std::endl;
+		//if(afro::g_inputSystem.GetMouseButtonDown(SDL_BUTTON(2))) std::cout << "Right Mouse Button" << afro::g_inputSystem.GetMousePosition().x << "," << afro::g_inputSystem.GetMousePosition().y << std::endl;
 		
 
 		// update engine

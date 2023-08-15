@@ -16,13 +16,14 @@
 
 #include "Framework/ResourceManager.h"
 #include "Framework/Components/EnginePhysicsComponent.h"
+#include <Framework/Components/CircleCollisionComponent.h>
 using namespace afro;
 
 
 bool SpaceGame::Initialize()
 {
 	//create font
-	m_font = afro::g_resources.Get<afro::Font>("Wedgie Regular.ttf", 30);
+	m_font = GET_RESOURCE(afro::Font, "Wedgie Regular.ttf", 30);
 	
 	m_titletext = std::make_unique<afro::Text>(m_font);
 	m_titletext->Create(afro::g_renderer, "Galaxy Intruders", afro::Color{ 1, 1, 1, 1 });
@@ -87,23 +88,35 @@ void SpaceGame::Update(float dt)
 				if (m_lives <= 0) { m_state = eState::PlayerDeadStart; }
 				
 				if (m_entities >= 1) { break; }
+				
+				std::unique_ptr<afro::SpriteComponent> component = std::make_unique<afro::SpriteComponent>();
+				component->m_texture = GET_RESOURCE(afro::Texture, "Guy.png", afro::g_renderer);
+				//Enemy 1
 				std::unique_ptr<Enemy> enemy = std::make_unique<Enemy>(afro::randomf(75.0f, 150.0f), afro::Pi, afro::Transform{ {afro::randomf(100.0f, 300.0f), afro::randomf(500.0f, 250.0f)},
-				afro::randomf(afro::TwoPi), 3});
+				afro::randomf(afro::TwoPi), 1});
 				enemy->m_tag = "Enemy";
 				enemy->m_game = this;
+				enemy->AddComponent(std::move(component));
+
+				auto collisionComponent = std::make_unique<afro::CircleCollisionComponent>();
+				collisionComponent->m_radius = 30.0f;
+				enemy->AddComponent(std::move(collisionComponent));
+
 				m_scene->Add(std::move(enemy));
 				m_entities++;
-				//Create Components
-				std::unique_ptr<afro::SpriteComponent> component = std::make_unique<afro::SpriteComponent>();
-				component->m_texture = afro::g_resources.Get<afro::Texture>("Space_Guy.png", afro::g_renderer);
-				m_scene->Add(std::move(enemy));
-				
+				//Enemy 2
 				if (m_score >= 100 ) {
+					std::unique_ptr<afro::SpriteComponent> component = std::make_unique<afro::SpriteComponent>();
 					std::unique_ptr<Enemy> enemy_2 = std::make_unique<Enemy>(afro::randomf(60.0f, 450.0f), afro::Pi, afro::Transform{ {afro::randomf(100.0f, 300.0f),
 						afro::randomf(50.0f, 70.0f)}, afro::randomf(afro::TwoPi), 7});
 					enemy_2->m_tag = "Enemy";
 					enemy_2->m_game = this;
-					enemy->AddComponent(std::move(component));
+					enemy_2->AddComponent(std::move(component));
+
+					auto collisionComponent = std::make_unique<afro::CircleCollisionComponent>();
+					collisionComponent->m_radius = 30.0f;
+					enemy_2->AddComponent(std::move(collisionComponent));
+
 					m_scene->Add(std::move(enemy_2));
 				}
 		}
@@ -115,19 +128,24 @@ void SpaceGame::Update(float dt)
 		afro::Game::SetLives(1);
 		{
 			//Create player
-			std::unique_ptr<Player> player = std::make_unique<Player>(200.0f, afro::Pi, afro::Transform{ {400, 300}, 0, 6 });
+			std::unique_ptr<Player> player = std::make_unique<Player>(200.0f, afro::Pi, afro::Transform{ {400, 300}, 0, 0.5f });
 			player->m_tag = "Player";
 			player->m_game = this;
 			//Create Components
-			std::unique_ptr<afro::SpriteComponent> component = std::make_unique<afro::SpriteComponent>();
-			component->m_texture = afro::g_resources.Get<afro::Texture>("Space_Guy.png", afro::g_renderer);
+			auto component = std::make_unique<afro::SpriteComponent>();
+			component->m_texture = GET_RESOURCE(afro::Texture, "Guy.png", afro::g_renderer);
 			player->AddComponent(std::move(component));
-			m_scene->Add(std::move(player));
 
 			auto physicscomponent = std::make_unique<afro::EnginePhysicsComponent>();
 			physicscomponent->m_damping = 0.9f;
 			player->AddComponent(std::move(physicscomponent));
 
+			auto collisionComponent = std::make_unique<afro::CircleCollisionComponent>();
+			collisionComponent->m_radius = 30.0f;
+			player->AddComponent(std::move(collisionComponent));
+			
+			player->Initialize();
+			m_scene->Add(std::move(player));
 		}
 		m_state = eState::Game;
 		break;

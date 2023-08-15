@@ -1,9 +1,12 @@
 #pragma once
 #include "Framework/Actor.h"
+#include "Framework/Framework.h"
 
 class Enemy : public afro::Actor
 {
 public:
+
+	
 	Enemy(float speed, float turnRate, const afro::Transform& transform) :
 		Actor{ transform },
 		m_speed{ speed },
@@ -12,6 +15,7 @@ public:
 		m_fireRate = 1.0f;
 		m_fireTimer = m_fireRate;
 	}
+	bool Initialize() override;
 	void Update(float dt) override;
 	void OnCollision(Actor* other) override;
 

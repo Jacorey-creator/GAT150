@@ -1,17 +1,21 @@
 #pragma once
+#include "Framework/Object.h"
 #include "Core/Core.h"
 #include "Renderer/Model.h"
 #include "Components.h"
 #include <memory>
 namespace afro
 {
-	class Actor
+	class Actor : public Object
 	{
 	public:
 		Actor() = default;
 		Actor(const afro::Transform transform) :
 			m_transform{ transform }
 		{}
+
+		virtual bool Initialize() override;
+		virtual void OnDestroy() override;
 
 		virtual void Update(float dt);
 		virtual void Draw(afro::Renderer& renderer);

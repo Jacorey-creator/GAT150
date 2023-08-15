@@ -11,6 +11,7 @@ namespace afro
 		if (m_texture) SDL_DestroyTexture(m_texture);
 	}
 	
+
 	bool Texture::Create(std::string filename, ...)
 	{
 		va_list args;
@@ -21,9 +22,8 @@ namespace afro
 
 		va_end(args);
 
-		return false;
+		return Load(filename,renderer);
 	}
-
 
 	bool Texture::Load(std::string filename, Renderer& renderer)
 	{
