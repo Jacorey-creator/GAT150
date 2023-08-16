@@ -1,5 +1,22 @@
 #pragma once
+#include "Framework/Factory.h"
+#include "Core/Json.h"
+#include <rapidjson/include/rapidjson/document.h>
 #include <string>
+
+#define CLASS_DECLARATION(classname) \
+virtual const char* GetClassName() { return #classname; } \
+bool Read(const rapidjson::Value& value); \
+class Register \
+	{ \
+	public: \
+	Register()  \
+ { \
+     Factory::Instance().Register<classname>(#classname); \
+	} \
+	};
+#define CLASS_DEFINITION(classname) \
+	classname::Register register_class;
 
 namespace afro
 {
@@ -7,14 +24,16 @@ namespace afro
 	{
 	public:
 		Object() = default;
-		Object(const std::string& name) : m_name{ name } {}
-		virtual ~Object() { OnDestroy();  }
+		Object(const std::string& name) : name{ name } {}
+		virtual ~Object() { OnDestroy(); };
 
-		virtual bool Initialize() { return true; }
+		CLASS_DECLARATION(Object)
+
+			virtual bool Initialize() { return true; }
 		virtual void OnDestroy() {}
 
 	protected:
-		std::string m_name;
+		std::string name;
 	};
 
 }

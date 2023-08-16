@@ -8,6 +8,7 @@ namespace afro
 	public:
 		Singleton(const Singleton& other) {}
 		Singleton& operator = (const Singleton& other) = delete;
+		friend class Factory;
 
 		static T& Instance()
 		{

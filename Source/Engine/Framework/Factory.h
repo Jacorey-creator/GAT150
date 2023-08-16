@@ -2,7 +2,10 @@
 #include <memory>
 #include <map>
 #include <string>
+#include "Core/Logger.h"
 #include "Singleton.h"
+
+#define CREATE_CLASS(classname) afro::Factory::Instance().Create<afro::classname>(#classname);
 namespace afro
 {
 	class CreatorBase
@@ -31,7 +34,8 @@ namespace afro
 
 		template<typename T>
 		std::unique_ptr<T> Create(const std::string& key);
-	private:
+		friend class Singleton;
+	protected:
 		std::map<std::string, std::unique_ptr<CreatorBase>> m_registry;
 	};
 
@@ -40,6 +44,9 @@ namespace afro
 	template<typename T>
 	inline void Factory::Register(const std::string& key)
 	{
+		INFO_LOG("Class register: " << key);
+
+
 		m_registry[key] = std::make_unique<Creator<T>>();
 	}
 

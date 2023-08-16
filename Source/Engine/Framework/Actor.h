@@ -1,16 +1,20 @@
 #pragma once
+#include <rapidjson/include/rapidjson/document.h>
 #include "Framework/Object.h"
 #include "Core/Core.h"
 #include "Renderer/Model.h"
 #include "Components.h"
 #include <memory>
+
 namespace afro
 {
 	class Actor : public Object
 	{
 	public:
+		CLASS_DECLARATION(Actor)
+
 		Actor() = default;
-		Actor(const afro::Transform transform) :
+		Actor(const afro::Transform& transform) :
 			m_transform{ transform }
 		{}
 
@@ -35,7 +39,6 @@ namespace afro
 
 		afro::Transform m_transform;
 		std::string m_tag;
-
 
 		float m_lifespan = -1.0f;
 

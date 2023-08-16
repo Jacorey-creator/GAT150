@@ -2,6 +2,8 @@
 #include "Framework/Actor.h"
 namespace afro {
 
+	CLASS_DEFINITION(EnginePhysicsComponent)
+
 	void afro::EnginePhysicsComponent::Update(float dt)
 	{
 		m_owner->m_transform.position += m_velocity * dt;

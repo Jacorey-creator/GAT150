@@ -3,6 +3,8 @@
 
 namespace afro 
 {
+	CLASS_DEFINITION(CircleCollisionComponent)
+
 	void afro::CircleCollisionComponent::Update(float dt)
 	{
 	}

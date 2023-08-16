@@ -18,7 +18,10 @@ void Player::Update(float dt)
 	//movement
 	float rotate = 0;
 	if (afro::g_inputSystem.GetKeyDown(SDL_SCANCODE_A)) rotate = -1;
-	if (afro::g_inputSystem.GetKeyDown(SDL_SCANCODE_D)) rotate = 1;
+	if (afro::g_inputSystem.GetKeyDown(SDL_SCANCODE_D))
+	{
+		rotate = 1;
+	}
 	m_transform.rotation += rotate * m_turnRate * afro::g_time.GetDeltaTime();
 
 	float thrust = 0;
@@ -44,8 +47,9 @@ void Player::Update(float dt)
 		std::unique_ptr<Weapon> weapon = std::make_unique<Weapon>(400.0f,m_transform);
 		
 		weapon->m_tag = "PlayerBullet";
-		std::unique_ptr<afro::SpriteComponent> component = std::make_unique<afro::SpriteComponent>();
-		component->m_texture = GET_RESOURCE(afro::Texture, "bullet.png", afro::g_renderer);
+		auto component = std::make_unique<afro::SpriteComponent>();
+ 		component->m_texture = GET_RESOURCE(afro::Texture, "bullet.png", afro::g_renderer);
+		weapon->AddComponent(std::move(component));
 
 		auto collisionComponent = std::make_unique<afro::CircleCollisionComponent>();
 		collisionComponent->m_radius = 30.0f;

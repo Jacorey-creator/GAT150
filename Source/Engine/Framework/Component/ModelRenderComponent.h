@@ -6,6 +6,8 @@ namespace afro {
 	class ModelRenderComponent : public RenderComponent
 	{
 	public:
+		CLASS_DECLARATION(ModelRenderComponent)
+
 		void Update(float dt);
 		void Draw(Renderer& renderer);
 		virtual float GetRadiu() { return m_model->GetRadius(); }

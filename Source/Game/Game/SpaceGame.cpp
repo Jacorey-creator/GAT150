@@ -132,15 +132,15 @@ void SpaceGame::Update(float dt)
 			player->m_tag = "Player";
 			player->m_game = this;
 			//Create Components
-			auto component = std::make_unique<afro::SpriteComponent>();
+			auto component = CREATE_CLASS(SpriteComponent)
 			component->m_texture = GET_RESOURCE(afro::Texture, "Guy.png", afro::g_renderer);
 			player->AddComponent(std::move(component));
 
-			auto physicscomponent = std::make_unique<afro::EnginePhysicsComponent>();
+			auto physicscomponent = CREATE_CLASS(EnginePhysicsComponent)
 			physicscomponent->m_damping = 0.9f;
 			player->AddComponent(std::move(physicscomponent));
 
-			auto collisionComponent = std::make_unique<afro::CircleCollisionComponent>();
+			auto collisionComponent = CREATE_CLASS(CircleCollisionComponent);
 			collisionComponent->m_radius = 30.0f;
 			player->AddComponent(std::move(collisionComponent));
 			

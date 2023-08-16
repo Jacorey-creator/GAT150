@@ -1,2 +1,2 @@
-INFO: C:\Users\jrowe\source\repos\GAT150\Source\Game\Game\Main.cpp(64) Initialize Engine
+INFO: C:\Users\jrowe\source\repos\GAT150\Source\Game\Game\Main.cpp(51) Initialize Engine
 C:\Users\jrowe\source\repos\GAT150\Source\Engine\Renderer\Texture.cpp(33) Could not create surface: ship.png

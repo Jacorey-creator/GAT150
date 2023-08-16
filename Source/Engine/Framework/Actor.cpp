@@ -2,6 +2,8 @@
 #include "Component/RenderComponent.h"
 namespace afro {
 	
+	CLASS_DEFINITION(Actor)
+
 	void Actor::Update(float dt)
 	{
 		if (m_lifespan != -1.0f) 
@@ -12,7 +14,7 @@ namespace afro {
 			{
 				m_destroyed = true;
 			}
-			for (auto& component : m_components)
+			for (auto& component : afro::Actor::m_components)
 			{
 				component->Update(dt);
 			}
@@ -48,5 +50,10 @@ namespace afro {
 		{
 			component->OnDestroy();
 		}
+	}
+
+	bool Actor::Read(const rapidjson::Value& value)
+	{
+		return true;
 	}
 }

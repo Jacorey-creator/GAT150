@@ -48,8 +48,6 @@ public:
 int main(int argc, char* argv[]) 
 {
 
-	Factory::Singleton::Instance().Register<afro::SpriteComponent>("SpriteComponent");
-
 	INFO_LOG("Initialize Engine");
 
 	afro::MemoryTracker::Initialize();
@@ -91,11 +89,6 @@ int main(int argc, char* argv[])
 	bool quit = false;
 	while (!quit)
 	{
-		//afro::g_inputSystem.GetMousePosition();
-		//if(afro::g_inputSystem.GetMouseButtonDown(SDL_BUTTON(0))) std::cout << "Left Mouse Button" << afro::g_inputSystem.GetMousePosition().x << "," << afro::g_inputSystem.GetMousePosition().y << std::endl;
-		//if(afro::g_inputSystem.GetMouseButtonDown(SDL_BUTTON(1))) std::cout << "Middle Mouse Button" << afro::g_inputSystem.GetMousePosition().x << "," << afro::g_inputSystem.GetMousePosition().y << std::endl;
-		//if(afro::g_inputSystem.GetMouseButtonDown(SDL_BUTTON(2))) std::cout << "Right Mouse Button" << afro::g_inputSystem.GetMousePosition().x << "," << afro::g_inputSystem.GetMousePosition().y << std::endl;
-		
 
 		// update engine
 		afro::g_time.Tick();

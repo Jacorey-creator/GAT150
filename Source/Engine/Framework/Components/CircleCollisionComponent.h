@@ -3,11 +3,11 @@
 #include "CollisionComponent.h"
 namespace afro
 {
-	class CircleCollisionComponent : public Component
+	class CircleCollisionComponent : public CollisionComponent
 	{
 	public:
 
-
+		CLASS_DECLARATION(CircleCollisionComponent)
 		virtual void Update(float dt) override;
 
 		bool CheckCollision(CollisionComponent* collision);

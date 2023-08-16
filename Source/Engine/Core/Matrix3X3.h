@@ -137,7 +137,7 @@ namespace afro
 
 	inline vec2 Matrix33::GetScale() const
 	{
-		vec2 x = { rows[0][0],rows[0][0] };
+		vec2 x = { rows[0][0],rows[0][1] };
 		vec2 y = { rows[1][0],rows[1][1] };
 
 		return { x.Length(), y.Length() };

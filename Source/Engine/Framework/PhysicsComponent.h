@@ -6,6 +6,7 @@ namespace afro
 	class PhysicsComponent : public Component
 	{
 	public:
+
 		virtual void ApplyForce(const vec2& force) = 0;
 	public:
 		vec2 m_velocity;

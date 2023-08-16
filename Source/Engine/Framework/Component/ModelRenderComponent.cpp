@@ -1,11 +1,16 @@
 #include "ModelRenderComponent.h"
 #include "Framework/Actor.h"
 
-void afro::ModelRenderComponent::Update(float dt)
+namespace afro
 {
-}
+	CLASS_DEFINITION(ModelRenderComponent)
 
-void afro::ModelRenderComponent::Draw(Renderer& renderer)
-{
-	m_model->Draw(renderer, m_owner->m_transform);
+	void afro::ModelRenderComponent::Update(float dt)
+	{
+	}
+
+	void afro::ModelRenderComponent::Draw(Renderer& renderer)
+	{
+		m_model->Draw(renderer, m_owner->m_transform);
+	}
 }

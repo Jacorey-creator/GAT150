@@ -3,6 +3,9 @@
 #include <rapidjson/include/rapidjson/document.h>
 #include "Vector2.h"
 
+#define READ_DATA(value, data) afro::Json::Read(value, #data, data);
+#define READ_DATA_REQUIRED(value, data) afro::Json::Read(value, #data, data, true);
+
 namespace afro
 {
 	class Json

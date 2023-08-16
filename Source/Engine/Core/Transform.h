@@ -24,7 +24,7 @@ namespace afro
 			mat3 mt = mat3::CreateTranslation(position);
 			mat3 mx = mt * ms * mr;
 
-			return ms * mr;
+			return mx;
 		}
 	};
 }
