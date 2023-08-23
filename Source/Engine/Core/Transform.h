@@ -1,6 +1,7 @@
 #pragma once
 #include "Vector2.h"
 #include "Matrix3X3.h"
+#include "Json.h"
 namespace afro
 {
 	class Transform
@@ -21,10 +22,13 @@ namespace afro
 		{
 			mat3 ms = mat3::CreateScale(scale);
 			mat3 mr = mat3::CreateRotation(rotation);
-			mat3 mt = mat3::CreateTranslation(position);
+			mat3 mt = mat3::CreateTranslation(position);	
 			mat3 mx = mt * ms * mr;
 
 			return mx;
 		}
+
+		void Read(const json_t& value);
+
 	};
 }

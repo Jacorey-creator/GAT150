@@ -190,6 +190,9 @@
     <ProjectReference Include="..\..\Engine\Input\Input.vcxproj">
       <Project>{552b9f91-dc07-4e87-9f47-33b5aa7bdb6a}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\..\Engine\Physics\Physics.vcxproj">
+      <Project>{da6be617-98fd-483f-87b4-adcfa3667af2}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\..\Engine\Renderer\Renderer.vcxproj">
       <Project>{5890d2e4-4d93-44fa-ae25-ba15d339438b}</Project>
     </ProjectReference>
@@ -199,6 +202,9 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="SpaceGame.h" />
     <ClInclude Include="Sword.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Space.json" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

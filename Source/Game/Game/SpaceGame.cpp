@@ -17,6 +17,8 @@
 #include "Framework/ResourceManager.h"
 #include "Framework/Components/EnginePhysicsComponent.h"
 #include <Framework/Components/CircleCollisionComponent.h>
+
+#include "Framework/Event/EventManager.h"
 using namespace afro;
 
 
@@ -41,6 +43,14 @@ bool SpaceGame::Initialize()
 	
 	//make scene
 	m_scene = std::make_unique<afro::Scene>();
+	m_scene->Load("scene.json");
+	m_scene->Initialize();
+	//add events
+	EVENT_SUBSCRIBE("AddPoints", SpaceGame::OnAddPoints);
+	EVENT_SUBSCRIBE("OnPlayerDead", SpaceGame::OnPlayerDead);
+
+	//afro::EventManager::Instance().Subscribe("AddPoints", this, std::bind(&SpaceGame::OnAddPoints, this, std::placeholders::_1));
+	//afro::EventManager::Instance().Subscribe("OnPlayerDead", this, std::bind(&SpaceGame::OnPlayerDead, this, std::placeholders::_1));
 
 	return true;
 }
@@ -67,14 +77,19 @@ void SpaceGame::Update(float dt)
 		data.color = afro::Color{ 1, 0, 0, 1 };
 		Transform transform{ { g_inputSystem.GetMousePosition() }, 0, 1 };
 		auto emitter = std::make_unique<Emitter>(transform, data);
-		emitter->m_lifespan = 1.0f;
+		emitter->lifespan = 1.0f;
 		m_scene->Add(std::move(emitter));
 	}
 	switch (m_state)
 	{
 	case eState::Title:
 		afro::g_audioSystem.PlayOneShot("space", true);
-		if (afro::g_inputSystem.GetKeyDown(SDL_SCANCODE_SPACE)) { m_state = eState::StartGame; }
+		if (afro::g_inputSystem.GetKeyDown(SDL_SCANCODE_SPACE)) 
+		{ 
+			m_state = eState::StartGame; 
+			auto actor = m_scene->GetActorByName("Background");
+			if (actor) actor->active = false;
+		}
 		break;
 	case eState::StartGame:
 		m_score = 0;
@@ -94,7 +109,7 @@ void SpaceGame::Update(float dt)
 				//Enemy 1
 				std::unique_ptr<Enemy> enemy = std::make_unique<Enemy>(afro::randomf(75.0f, 150.0f), afro::Pi, afro::Transform{ {afro::randomf(100.0f, 300.0f), afro::randomf(500.0f, 250.0f)},
 				afro::randomf(afro::TwoPi), 1});
-				enemy->m_tag = "Enemy";
+				enemy->tag = "Enemy";
 				enemy->m_game = this;
 				enemy->AddComponent(std::move(component));
 
@@ -109,7 +124,7 @@ void SpaceGame::Update(float dt)
 					std::unique_ptr<afro::SpriteComponent> component = std::make_unique<afro::SpriteComponent>();
 					std::unique_ptr<Enemy> enemy_2 = std::make_unique<Enemy>(afro::randomf(60.0f, 450.0f), afro::Pi, afro::Transform{ {afro::randomf(100.0f, 300.0f),
 						afro::randomf(50.0f, 70.0f)}, afro::randomf(afro::TwoPi), 7});
-					enemy_2->m_tag = "Enemy";
+					enemy_2->tag = "Enemy";
 					enemy_2->m_game = this;
 					enemy_2->AddComponent(std::move(component));
 
@@ -123,13 +138,13 @@ void SpaceGame::Update(float dt)
 
 		break;
 	case eState::StartLevel:
-		m_scene->RemoveAll();
+		m_scene->RemoveAll(true);
 		m_entities = 0;
 		afro::Game::SetLives(1);
 		{
 			//Create player
 			std::unique_ptr<Player> player = std::make_unique<Player>(200.0f, afro::Pi, afro::Transform{ {400, 300}, 0, 0.5f });
-			player->m_tag = "Player";
+			player->tag = "Player";
 			player->m_game = this;
 			//Create Components
 			auto component = CREATE_CLASS(SpriteComponent)
@@ -184,6 +199,7 @@ void SpaceGame::Update(float dt)
 
 void SpaceGame::Draw(afro::Renderer& renderer)
 {
+	m_scene->Draw(renderer);
 	if (m_state == eState::Title) 
 	{
 		m_titletext->Draw(renderer, 400, 300);
@@ -201,6 +217,16 @@ void SpaceGame::Draw(afro::Renderer& renderer)
 	m_scoretext->Draw(renderer, 40, 40);
 	m_highscoretext->Draw(renderer, 300, 40);
 
-	m_scene->Draw(renderer);
 
+}
+
+void SpaceGame::OnAddPoints(const afro::Event& event)
+{
+	m_score += std::get<int>(event.data);
+}
+
+void SpaceGame::OnPlayerDead(const afro::Event& event)
+{
+	m_lives--;
+	m_state = eState::PlayerDeadStart;
 }

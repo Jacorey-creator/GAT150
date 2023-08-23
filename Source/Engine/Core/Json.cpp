@@ -37,9 +37,21 @@ bool afro::Json::Read(const rapidjson::Value& value, const std::string& name, in
     return false;
 }
 
+bool afro::Json::Read(const rapidjson::Value& value, const std::string& name, bool& data, bool required)
+{
+    if (!value.HasMember(name.c_str()) || !value[name.c_str()].IsBool())
+    {
+        if (required) ERROR_LOG("Cannot read required json data: " << name.c_str());
+        return false;
+    }
+    data = value[name.c_str()].GetBool();
+
+    return false;
+}
+
 bool afro::Json::Read(const rapidjson::Value& value, const std::string& name, float& data, bool required)
 {
-    if (!value.HasMember(name.c_str()) || !value[name.c_str()].IsFloat())
+    if (!value.HasMember(name.c_str()) || !value[name.c_str()].IsNumber())
     {
         if (required) ERROR_LOG("Cannot read required json data: " << name.c_str());
         return false;

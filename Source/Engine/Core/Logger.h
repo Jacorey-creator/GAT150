@@ -1,13 +1,15 @@
 #pragma once
+#include "Framework/Singleton.h"
 #include <string>
+#include <iostream>
 #include <cassert>
 #include <fstream>
 
 #ifdef _DEBUG
-#define INFO_LOG(message) { if(afro::g_logger.Log(afro::LogLevel::Info, __FILE__,__LINE__)) { afro::g_logger << message << "\n"; } }
-#define WARNING_LOG(message) { if(afro::g_logger.Log(afro::LogLevel::Warning, __FILE__,__LINE__)) { afro::g_logger << message << "\n";} }
-#define ERROR_LOG(message) { if(afro::g_logger.Log(afro::LogLevel::Error, __FILE__,__LINE__)) { afro::g_logger << message << "\n";} }
-#define ASSERT_LOG(condition, message) { if (!condition && afro::g_logger.Log(afro::LogLevel::Assert, __FILE__,__LINE__)) { afro::g_logger << message << "\n";} assert(condition); }
+#define INFO_LOG(message) { if(afro::Logger::Instance().Log(afro::LogLevel::Info, __FILE__,__LINE__)) { afro::Logger::Instance() << message << "\n"; } }
+#define WARNING_LOG(message) { if(afro::Logger::Instance().Log(afro::LogLevel::Warning, __FILE__,__LINE__)) { afro::Logger::Instance() << message << "\n";} }
+#define ERROR_LOG(message) { if(afro::Logger::Instance().Log(afro::LogLevel::Error, __FILE__,__LINE__)) { afro::Logger::Instance() << message << "\n";} }
+#define ASSERT_LOG(condition, message) { if (!condition && afro::Logger::Instance().Log(afro::LogLevel::Assert, __FILE__,__LINE__)) { afro::Logger::Instance() << message << "\n";} assert(condition); }
 #else
 #define INFO_LOG(message) {}
 #define WARNING_LOG(message) {}
@@ -25,10 +27,11 @@ namespace afro
 		Assert
 	};
 
-	class Logger
+	class Logger : public Singleton<Logger>
 	{
 	public:
-		Logger(LogLevel loglevel, std::ostream* ostream, const std::string& filename = "") :
+
+		Logger(LogLevel loglevel = LogLevel::Info, std::ostream* ostream = &std::cout, const std::string& filename = "log.txt") :
 			m_ostream{ ostream },
 			m_loglevel{ loglevel } 
 		{
@@ -47,7 +50,7 @@ namespace afro
 		std::ofstream m_fstream;
 	};
 
-	extern Logger g_logger;
+	//extern Logger g_logger;
 	template<typename T>
 	inline Logger& Logger::operator << (T value)
 	{

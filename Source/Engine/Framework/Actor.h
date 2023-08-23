@@ -15,8 +15,9 @@ namespace afro
 
 		Actor() = default;
 		Actor(const afro::Transform& transform) :
-			m_transform{ transform }
+			transform{ transform }
 		{}
+		Actor(const Actor& other);
 
 		virtual bool Initialize() override;
 		virtual void OnDestroy() override;
@@ -37,14 +38,15 @@ namespace afro
 
 		class Game* m_game = nullptr;
 
-		afro::Transform m_transform;
-		std::string m_tag;
+		afro::Transform transform;
+		std::string tag;
 
-		float m_lifespan = -1.0f;
-
+		float lifespan = -1.0f;
+		bool destroyed = false;
+		bool persistant = false;
+		bool prototype = false;
 	protected:
-		std::vector<std::unique_ptr< Component>> m_components;
-		bool m_destroyed = false;
+		std::vector<std::unique_ptr<Component>> components;
 
 	};
 
@@ -52,7 +54,7 @@ namespace afro
 	template<typename T>
 	inline T* Actor::GetComponent()
 	{
-		for (auto& component : m_components)
+		for (auto& component : components)
 		{
 			T* result = dynamic_cast<T*>(component.get());
 			if (result) return result;

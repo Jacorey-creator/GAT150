@@ -1,8 +1,11 @@
 #pragma once
 #include "Framework/Game.h"
 #include "Renderer/Text.h"
+#include "Framework/Event/EventManager.h"
 
-class SpaceGame : public afro:: Game
+
+
+class SpaceGame : public afro:: Game, afro::IEventListener
 {
 public:
 	enum eState
@@ -24,6 +27,9 @@ public:
 	virtual void Draw(afro::Renderer& renderer) override;
 
 	void SetState(eState state) { m_state = state; }
+
+	void OnAddPoints(const afro::Event& event);
+	void OnPlayerDead(const afro::Event& event);
 	friend class Enemy;
 private:
 	eState m_state = eState::Title;

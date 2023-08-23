@@ -1,29 +1,27 @@
 #pragma once
 #include "Framework/Actor.h"
+#include "Core/Json.h"
 #include "Framework/Framework.h"
 #include "Player.h"
 
-
-class Weapon : public afro::Actor
+namespace afro
 {
 
-
-
-public:
-	Weapon(float speed, const afro::Transform& transform) :
-		Actor{ transform },
-		m_speed{ speed }
+	class Weapon : public Actor
 	{
-		m_lifespan = 2.0f;
-	}
-	void Update(float dt) override;
-	void OnCollision(Actor* other) override;
-	bool Initialize() override;
+	public:
+		CLASS_DECLARATION(Weapon)
+	
+		void Update(float dt) override;
+		void OnCollision(Actor* other);
+		bool Initialize() override;
+		//void Read(const json_t& value);
 
-private:
-	float m_speed = 0;
-	float m_turnRate = 0;
+	private:
+		float speed = 0;
+		float m_turnRate = 0;
 
-	class afro::PhysicsComponent* m_physicsComponent = nullptr;
+		class afro::PhysicsComponent* m_physicsComponent = nullptr;
 
-};
+	};
+}

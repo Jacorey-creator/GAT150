@@ -5,6 +5,9 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
+    <Filter Include="Asset">
+      <UniqueIdentifier>{2ccd6740-d803-458e-b3d1-ed55dbd7370d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -34,5 +37,8 @@
       <Filter>Source</Filter>
     </ClInclude>
     <ClInclude Include="SpaceGame.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Space.json" />
   </ItemGroup>
 </Project>

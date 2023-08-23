@@ -10,5 +10,6 @@ namespace afro
 		void Update(float dt);
 		void ApplyForce(const vec2& force);
 	public:
+
 	};
 }

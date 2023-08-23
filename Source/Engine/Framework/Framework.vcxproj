@@ -140,6 +140,7 @@
     <ClCompile Include="Components\EnginePhysicsComponent.cpp" />
     <ClCompile Include="Components\SpriteComponent.cpp" />
     <ClCompile Include="Component\ModelRenderComponent.cpp" />
+    <ClCompile Include="Event\EventManager.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Scene.cpp" />
   </ItemGroup>
@@ -152,6 +153,8 @@
     <ClInclude Include="Components\SpriteComponent.h" />
     <ClInclude Include="Component\ModelRenderComponent.h" />
     <ClInclude Include="Component\RenderComponent.h" />
+    <ClInclude Include="Event\Event.h" />
+    <ClInclude Include="Event\EventManager.h" />
     <ClInclude Include="Factory.h" />
     <ClInclude Include="Framework.h" />
     <ClInclude Include="Game.h" />

@@ -1,37 +1,51 @@
 #include "Sword.h"
 
-bool Weapon::Initialize()
-{
-	Actor::Initialize();
 
-	m_physicsComponent = GetComponent<afro::PhysicsComponent>();
-	auto collisionComponent = GetComponent<afro::CollisionComponent>();
-	if (collisionComponent)
+namespace afro
+{
+
+	bool Weapon::Initialize()
 	{
-		auto renderComponent = GetComponent<afro::RenderComponent>();
-		if (renderComponent)
+
+		Actor::Initialize();
+
+
+		//m_physicsComponent = GetComponent<afro::PhysicsComponent>();
+		auto collisionComponent = GetComponent<afro::CollisionComponent>();
+		if (collisionComponent)
 		{
-		float scale = m_transform.scale;
-		collisionComponent->m_radius = GetComponent<afro::RenderComponent>()->GetRadius();
+			auto renderComponent = GetComponent<afro::RenderComponent>();
+			if (renderComponent)
+			{
+				float scale = transform.scale;
+				collisionComponent->m_radius = GetComponent<afro::RenderComponent>()->GetRadius();
+			}
 		}
+		return true;
 	}
-	return true;
-}
 
-void Weapon::Update(float dt)
-{
-	Actor::Update(dt);
+	void Weapon::Read(const json_t& value)
+	{
+		Actor::Read(value);
 
-	afro::vec2 forward = afro::vec2{ 0,-1 }.Rotate(m_transform.rotation);
-	m_transform.position += forward * m_speed * afro::g_time.GetDeltaTime();
+		READ_DATA(value, speed)
+	}
 
-	m_transform.position.x = afro::Wrap(m_transform.position.x, (float)afro::g_renderer.GetWidth());
-	m_transform.position.y = afro::Wrap(m_transform.position.y, (float)afro::g_renderer.GetHeight());
-}
+	void Weapon::Update(float dt)
+	{
+		Actor::Initialize();
 
-void Weapon::OnCollision(Actor* other)
-{
-	if (other->m_tag != m_tag) {
-		m_destroyed = true;
+		afro::vec2 forward = afro::vec2{ 0,-1 }.Rotate(transform.rotation);
+		transform.position += forward * speed * afro::g_time.GetDeltaTime();
+
+		transform.position.x = afro::Wrap(transform.position.x, (float)afro::g_renderer.GetWidth());
+		transform.position.y = afro::Wrap(transform.position.y, (float)afro::g_renderer.GetHeight());
+	}
+
+	void Weapon::OnCollision(Actor* other)
+	{
+		if (other->tag != tag) {
+			destroyed = true;
+		}
 	}
 }

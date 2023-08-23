@@ -18,7 +18,8 @@
 #include <Renderer/Emitter.h>
 #include  <cassert>
 #include <array>
-
+#include <functional>
+#include "Physics/PhysicsSystem.h"
 
 
 using namespace afro;
@@ -44,18 +45,17 @@ public:
 
 
 
-
 int main(int argc, char* argv[]) 
 {
+
+	afro::PhysicsSystem::Instance().Initialize();
 
 	INFO_LOG("Initialize Engine");
 
 	afro::MemoryTracker::Initialize();
 	afro::seed_random((unsigned int)time(nullptr));
 	afro::setFilePath("Assets");
-	//json
-	rapidjson::Document document;
-	afro::Json::Load("json.txt", document);
+
 
 	afro::g_renderer.Initialize();
 	afro::g_renderer.CreateWindow("CSC196", 800, 600);
@@ -108,6 +108,7 @@ int main(int argc, char* argv[])
 		// draw
 		afro::g_renderer.SetColor(0, 0, 0, 0);
 		afro::g_renderer.BeginFrame();
+		game->Draw(afro::g_renderer);
 		for (auto& star : stars)
 		{
 			star.Update(afro::g_renderer.GetWidth(), afro::g_renderer.GetHeight());
@@ -116,7 +117,6 @@ int main(int argc, char* argv[])
 			afro::g_renderer.DrawPoint(star.m_pos.x, star.m_pos.y);
 		}
 		afro::g_renderer.DrawTexture(texture.get(), 0, 0, 0.0f);
-		game->Draw(afro::g_renderer);
 
 		afro::g_particleSystem.Draw(g_renderer);
 

@@ -11,6 +11,9 @@
     <Filter Include="Source\Components">
       <UniqueIdentifier>{b817140b-780e-4613-991d-13b6cd004192}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Components\Event">
+      <UniqueIdentifier>{a5b761bc-978c-46c1-b957-7015ac351f6d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Actor.cpp">
@@ -32,6 +35,9 @@
       <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="Object.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Event\EventManager.cpp">
       <Filter>Source</Filter>
     </ClCompile>
   </ItemGroup>
@@ -77,5 +83,11 @@
     </ClInclude>
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="Factory.h" />
+    <ClInclude Include="Event\Event.h">
+      <Filter>Source\Components\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="Event\EventManager.h">
+      <Filter>Source\Components\Event</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
