@@ -22,26 +22,26 @@ namespace afro
 			iter = ((*iter)->destroyed) ? iter = m_actors.erase(iter) : ++iter;
 		}
 		//check collisions
-		for (auto iter1 = m_actors.begin(); iter1 != m_actors.end(); iter1++)
-		{
-			for (auto iter2 = std::next(iter1,1); iter2 != m_actors.end(); iter2++)
-			{
-				CollisionComponent* collision1 = (*iter1)->GetComponent<CollisionComponent>();
-				CollisionComponent* collision2 = (*iter2)->GetComponent<CollisionComponent>();
+		//for (auto iter1 = m_actors.begin(); iter1 != m_actors.end(); iter1++)
+		//{
+		//	for (auto iter2 = std::next(iter1,1); iter2 != m_actors.end(); iter2++)
+		//	{
+		//		CollisionComponent* collision1 = (*iter1)->GetComponent<CollisionComponent>();
+		//		CollisionComponent* collision2 = (*iter2)->GetComponent<CollisionComponent>();
 
-				if (collision1 == nullptr || collision2 == nullptr) 
-				{
-					continue;
-				}
+		//		if (collision1 == nullptr || collision2 == nullptr) 
+		//		{
+		//			continue;
+		//		}
 
-				if (collision1->CheckCollision(collision2))
-				{
-					//boom
-					(*iter1)->OnCollision(iter2->get());
-					(*iter2)->OnCollision(iter1->get());
-				}
-			}
-		}
+		//		if (collision1->CheckCollision(collision2))
+		//		{
+		//			//boom
+		//			(*iter1)->OnCollision(iter2->get());
+		//			(*iter2)->OnCollision(iter1->get());
+		//		}
+		//	}
+		//}
 	}
 	void Scene::Draw(Renderer& renderer)
 	{
@@ -79,9 +79,9 @@ namespace afro
 	}
 	void Scene::Read(const json_t& value)
 	{
-		if (HAS_DATA(value, actors) && GET_DATA(value, components).IsArray())
+		if (HAS_DATA(value, actors) && GET_DATA(value, actors).IsArray())
 		{
-			for (auto& actorValue : GET_DATA(value, components).GetArray())
+			for (auto& actorValue : GET_DATA(value, actors).GetArray())
 			{
 				std::string type;
 				READ_DATA(actorValue, type);

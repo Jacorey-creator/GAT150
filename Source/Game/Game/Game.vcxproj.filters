@@ -36,9 +36,13 @@
     <ClInclude Include="Sword.h">
       <Filter>Source</Filter>
     </ClInclude>
-    <ClInclude Include="SpaceGame.h" />
+    <ClInclude Include="SpaceGame.h">
+      <Filter>Source</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="Space.json" />
+    <None Include="..\..\..\Build\Assets\Scenes\Space.json">
+      <Filter>Asset</Filter>
+    </None>
   </ItemGroup>
 </Project>

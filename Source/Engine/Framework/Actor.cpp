@@ -40,8 +40,8 @@ namespace afro {
 	Actor::Actor(const Actor& other)
 	{
 		name = other.name;
-		name = other.tag;
-		name = other.lifespan;
+		tag = other.tag;
+		lifespan = other.lifespan;
 		transform = other.transform;
 		m_scene = other.m_scene;
 		m_game = other.m_game;

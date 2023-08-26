@@ -19,4 +19,6 @@ namespace afro
 	protected:
 		Singleton() = default;
 	};
+
+
 }

@@ -10,6 +10,8 @@
 #include "Component/RenderComponent.h"
 #include "Components/SpriteComponent.h"
 #include "Components/EnginePhysicsComponent.h"
+#include "Box2dCollisionComponent.h"
+#include "Box2dPhysicsComponent.h"
 
 #include "Components/CircleCollisionComponent.h"
 #include "Components/CollisionComponent.h"

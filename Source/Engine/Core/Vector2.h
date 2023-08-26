@@ -13,8 +13,10 @@ namespace afro
 		Vector2(float x, float y) : x{ x }, y{y} {}
 		Vector2(int x, int y) : x{ (float)x }, y{ (float)y } {}
 
+
 		float  operator [] (size_t index) const { return (&x)[index]; }
 		float& operator [] (size_t index)  { return (&x)[index]; }
+
 
 		Vector2 operator - () const { return Vector2(-x, -y); }
 

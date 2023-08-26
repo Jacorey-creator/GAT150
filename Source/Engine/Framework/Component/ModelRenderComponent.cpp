@@ -23,7 +23,7 @@ namespace afro
 
 	void ModelRenderComponent::Read(const json_t& value)
 	{
-		READ_DATA(value, modelName)
+		READ_DATA(value, modelName);
 
 	}
 

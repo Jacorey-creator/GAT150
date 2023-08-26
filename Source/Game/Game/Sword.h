@@ -15,7 +15,6 @@ namespace afro
 		void Update(float dt) override;
 		void OnCollision(Actor* other);
 		bool Initialize() override;
-		//void Read(const json_t& value);
 
 	private:
 		float speed = 0;

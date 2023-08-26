@@ -9,3 +9,4 @@
 #include "Core/Transform.h"
 #include "Core/MathUtils.h"
 #include "Color.h"
+#include "Math/Rect.h"

@@ -1,8 +1,12 @@
 C:\Users\jrowe\source\repos\GAT150\Source\Engine\Framework\Actor.cpp
+C:\Users\jrowe\source\repos\GAT150\Source\Engine\Framework\Box2dCollisionComponent.cpp
+C:\Users\jrowe\source\repos\GAT150\Source\Engine\Framework\Box2dPhysicsComponent.cpp
 C:\Users\jrowe\source\repos\GAT150\Source\Engine\Framework\Components\CircleCollisionComponent.cpp
 C:\Users\jrowe\source\repos\GAT150\Source\Engine\Framework\Components\EnginePhysicsComponent.cpp
+C:\Users\jrowe\source\repos\GAT150\Source\Engine\Framework\Components\SpriteAnimComponent.cpp
 C:\Users\jrowe\source\repos\GAT150\Source\Engine\Framework\Components\SpriteComponent.cpp
 C:\Users\jrowe\source\repos\GAT150\Source\Engine\Framework\Component\ModelRenderComponent.cpp
 C:\Users\jrowe\source\repos\GAT150\Source\Engine\Framework\Event\EventManager.cpp
 C:\Users\jrowe\source\repos\GAT150\Source\Engine\Framework\Object.cpp
 C:\Users\jrowe\source\repos\GAT150\Source\Engine\Framework\Scene.cpp
+C:\Users\jrowe\source\repos\GAT150\Source\Engine\Framework\TextRenderComponent.cpp
