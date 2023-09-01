@@ -44,7 +44,12 @@ namespace afro
 
 	void Box2DPhysicsComponent::SetVelocity(const vec2& velocity)
 	{
+		m_body->SetLinearVelocity(VEC2_TO_B2VEC2(velocity));
+	}
 
+	void Box2DPhysicsComponent::SetGravityScale(float scale)
+	{
+		m_body->SetGravityScale(scale);
 	}
 
 	void Box2DPhysicsComponent::Read(const json_t& value)
@@ -54,5 +59,13 @@ namespace afro
 		READ_NAME_DATA(value, "gravityScale", data.gravityScale);
 		READ_NAME_DATA(value, "constrainAngle", data.constrainAngle);
 		READ_NAME_DATA(value, "isDynamic", data.isDynamic);
+
 	}
+
+	void Box2DPhysicsComponent::SetPosition(const vec2& position)
+	{
+		vec2 worldPosition = PhysicsSystem::Instance().ScreenToWorld(position);
+		m_body->SetTransform(VEC2_TO_B2VEC2(worldPosition), m_owner->transform.rotation);
+	}
+
 }

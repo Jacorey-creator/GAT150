@@ -87,7 +87,6 @@ namespace afro
 				afro::EventManager::Instance().DispatchEvent("OnPlayerDead", 0);
 			}
 
-			m_game->SetLives(m_game->GetLives() - 1);
 
 		}
 

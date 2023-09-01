@@ -27,12 +27,17 @@ namespace afro
 		bool Initialize() override;
 		void Update(float dt) override;
 
-		void SetSequence(const std::string name);
+		void SetSequence(const std::string name, bool update = true);
 		void UpdateSource();
 
 	public:
 		int frame = 0;
 		float frametimer = 0;
+
+		float paddingtop = 0.0f;
+		float paddingbottom = 0.0f;
+		float paddingleft = 0.0f;
+		float paddingright = 0.0f;
 	private:
 		std::string defaultSequenceName; //Sequence is each animation
 		std::map<std::string, AnimSequence> m_sequences;

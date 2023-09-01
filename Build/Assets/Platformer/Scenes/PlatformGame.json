@@ -1,0 +1,199 @@
+{
+  "actors": [
+    {
+      "type": "Actor",
+      "name": "Background",
+      "persistent": true,
+      "transform": {
+        "position": [ 500, 300 ],
+        "scale": 3,
+        "rotation": 0
+      },
+      "components": [
+        {
+          "type": "SpriteComponent",
+          "textureName": "Textures/background.png",
+          "source": [ 0, 0, 0, 0 ]
+        }
+      ]
+    },
+    {
+      "type": "Actor",
+      "name": "Coin",
+      "persistent": true,
+      "transform": {
+        "position": [ 200, 10 ],
+        "scale": 2,
+        "rotation": 0
+      },
+      "components": [
+        {
+          "type": "SpriteAnimComponent",
+          "defaultSequence": "idle",
+          "sequences": [
+            {
+              "name": "idle",
+              "fps": 12,
+              "numColumns": 8,
+              "numRows": 1,
+              "startFrame": 1,
+              "endFrame": 8,
+              "textureName": "Textures/coin.png"
+            }
+          ]
+        },
+        {
+          "type": "Box2DPhysicsComponent",
+          "damping": 0,
+          "gravityScale": 1,
+          "constrainAngle": true
+        },
+        {
+          "type": "Box2DCollisionComponent",
+          "restitution": 0.1
+        }
+      ]
+    },
+    {
+      "type": "Player",
+      "name": "Player",
+      "tag": "Player",
+      "persistent": true,
+      "m_speed": 6,
+      "maxSpeed": 10,
+      "m_health":  1,
+      "jump": 1000,
+      "transform": {
+        "position": [ 440, 300 ],
+        "scale": 2,
+        "rotation": 0
+      },
+      "components": [
+        {
+          "type": "SpriteAnimComponent",
+          "defaultSequenceName": "idle",
+          "source": [ 0, 0, 16, 35 ],
+          "origin": [ 0.5, 1 ],
+          "paddingtop" : 27,
+          "paddingbottom" : 20,
+          "paddingleft": 27,
+          "paddingright" :  27,
+          "sequences": [
+            {
+              "name": "idle",
+              "fps": 12,
+              "numColumns": 6,
+              "numRows": 1,
+              "startFrame": 1,
+              "endFrame": 6,
+              "textureName": "Textures/Bandit.png"
+            },
+            {
+              "name": "run",
+              "fps": 12,
+              "numColumns": 8,
+              "numRows": 1,
+              "startFrame": 1,
+              "endFrame": 8,
+              "textureName": "Textures/Bandit_Run.png"
+            }
+          ]
+        },
+        {
+          "type": "Box2DPhysicsComponent",
+          "constrainAngle": true,
+          "gravityScale": 1
+        },
+        {
+          "type": "Box2DCollisionComponent",
+          "restitution": 0.1
+        }
+      ]
+    },
+    {
+      "type": "Actor",
+      "name": "Title",
+      "persistent": true,
+      "transform": {
+        "position": [ 400, 300 ],
+        "scale": 2,
+        "rotation": 0
+      },
+      "components": [
+        {
+          "type": "TextRenderComponent",
+          "fontName": "Fonts/Monsier Italic.ttf",
+          "fontSize": 24,
+          "text": "Coin Grabber",
+          "color": [ 218, 165, 0, 1 ]
+        }
+      ]
+    },
+    {
+      "type": "Actor",
+      "name": "Crate",
+      "tag": "Ground",
+      "persistent": true,
+      "prototype": true,
+      "transform": {
+        "position": [ 375, 300 ],
+        "scale": 1,
+        "rotation": 0
+      },
+      "components": [
+        {
+          "type": "SpriteComponent",
+          "textureName": "Textures/crate.png"
+        },
+        {
+          "type": "Box2DPhysicsComponent",
+          "damping": 0,
+          "gravityScale": 1,
+          "constrainAngle": true
+
+        }
+      ]
+    },
+    {
+      "type": "Enemy",
+      "name": "Bat",
+      "tag": "Enemy",
+      "persistent": true,
+      "speed": 10,
+      "jump": 8,
+      "transform": {
+        "position": [ 500, 30 ],
+        "scale": 1,
+        "rotation": 0
+      },
+      "components": [
+        {
+          "type": "SpriteAnimComponent",
+          "defaultSequenceName": "idle",
+          "sequences": [
+            {
+              "name": "idle",
+              "fps": 12,
+              "numColumns": 11,
+              "numRows": 1,
+              "startFrame": 1,
+              "endFrame": 6,
+              "textureName": "Textures/Bat.png"
+            }
+          ]
+        },
+        {
+          "type": "Box2DPhysicsComponent",
+          "constrainAngle": true,
+          "gravityScale": 0
+
+        },
+        {
+          "type": "Box2DCollisionComponent",
+          "restitution": 0.1,
+          "isTrigger": true
+        }
+      ]
+    }
+  ]
+}

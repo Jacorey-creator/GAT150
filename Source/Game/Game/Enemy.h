@@ -1,6 +1,7 @@
 #pragma once
 #include "Framework/Actor.h"
 #include "Framework/Framework.h"
+#include "Framework/Components/EnginePhysicsComponent.h"
 
 namespace afro
 {

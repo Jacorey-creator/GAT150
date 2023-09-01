@@ -44,10 +44,13 @@ namespace afro
 	}
 	vec2 Texture::GetSize()
 	{
-		// ASSERT texture is not null
 		SDL_Point point{};
 		// https://wiki.libsdl.org/SDL2/SDL_QueryTexture
-		SDL_QueryTexture(m_texture, NULL, NULL, &point.x, &point.y);
+
+		if (SDL_QueryTexture(m_texture, nullptr, nullptr, &point.x, &point.y))
+		{
+			ERROR_LOG("Could not get texture size");
+		}
 		return vec2{ point.x, point.y };
 	}
 	

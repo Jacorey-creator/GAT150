@@ -15,10 +15,11 @@ namespace afro {
 			{
 				destroyed = true;
 			}
-			for (auto& component : afro::Actor::components)
-			{
-				component->Update(dt);
-			}
+		}
+
+		for (auto& component : components)
+		{
+			component->Update(dt);
 		}
 	}
 	void Actor::Draw(afro::Renderer& renderer)

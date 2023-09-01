@@ -21,13 +21,26 @@
     <ClCompile Include="PlatGame.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PlatGame.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="PlatformGame.json" />
+    <None Include="..\..\..\Build\Assets\Platformer\Scenes\tilemap.json" />
+    <None Include="..\..\..\Build\Assets\Platformer\Scenes\PlatformGame.json" />
   </ItemGroup>
 </Project>

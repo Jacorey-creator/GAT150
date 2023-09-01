@@ -5,10 +5,10 @@
 
 namespace afro
 {
-	class Model {
+	class Model : public Resource {
 	public:
 		Model() = default;
-		Model(const std::vector<vec2>& points) : m_points{ points } {}
+		//Model(const std::vector<vec2>& points) : m_points{ points } {}
 
 
 		virtual bool Create(std::string filename, ...)/*override*/;

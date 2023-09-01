@@ -91,7 +91,7 @@
           "type": "Box2DCollisionComponent",
           "size": [ 32, 32 ],
           "isTrigger": false,
-          "constrainAngle" :  true
+          "constrainAngle": false
         }
       ]
     },

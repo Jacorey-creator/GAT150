@@ -17,6 +17,7 @@
 #include <array>
 #include <functional>
 #include "Physics/PhysicsSystem.h"
+#include "PlatGame.h"
 
 
 using namespace afro;
@@ -34,11 +35,11 @@ int main(int argc, char* argv[])
 
 	afro::MemoryTracker::Initialize();
 	afro::seed_random((unsigned int)time(nullptr));
-	afro::setFilePath("Assets/PlatformGame");
+	afro::setFilePath("Assets/Platformer");
 
 
 	afro::g_renderer.Initialize();
-	afro::g_renderer.CreateWindow("CSC196", 800, 600);
+	afro::g_renderer.CreateWindow("Game", 800, 600);
 
 	afro::g_inputSystem.Initialize();
 	afro::g_audioSystem.Initialize();
@@ -46,7 +47,8 @@ int main(int argc, char* argv[])
 	//std::unique_ptr<SpaceGame> game = std::make_unique<SpaceGame>();
 	//game->Initialize();
 
-
+	std::unique_ptr<PlatGame> game = std::make_unique<PlatGame>();
+	game->Initialize();
 
 
 	
@@ -56,8 +58,8 @@ int main(int argc, char* argv[])
 	constexpr float turnRate = afro::DegreesToRadians(180);
 
 	// create texture
-	res_t<afro::Texture> texture = GET_RESOURCE(afro::Texture, "SpaceGame/Textures/guy.png", afro::g_renderer);
-	texture->Load("SpaceGame/Textures/Guy.png", g_renderer);
+	/*res_t<afro::Texture> texture = GET_RESOURCE(afro::Texture, "Textures/coin.png", afro::g_renderer);
+	texture->Load("Textures/coin.png", g_renderer);*/
 
 	//main game loop
 	bool quit = false;
@@ -74,18 +76,18 @@ int main(int argc, char* argv[])
 			quit = true;
 		}
 
-		// update game
-		//game->Update(afro::g_time.GetDeltaTime());
 		afro::PhysicsSystem::Instance().Update(afro::g_time.GetDeltaTime());
 		afro::g_particleSystem.Update(afro::g_time.GetDeltaTime());
 
+		// update game
+		game->Update(afro::g_time.GetDeltaTime());
 
 		// draw
 		afro::g_renderer.SetColor(0, 0, 0, 0);
 		afro::g_renderer.BeginFrame();
-		//game->Draw(afro::g_renderer);
+		game->Draw(afro::g_renderer);
 
-		afro::g_renderer.DrawTexture(texture.get(), 0, 0, 0.0f);
+		//afro::g_renderer.DrawTexture(texture.get(), 0, 0, 0.0f);
 
 		afro::g_particleSystem.Draw(g_renderer);
 

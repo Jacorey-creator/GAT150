@@ -23,8 +23,8 @@ namespace afro
 
 			float turnAngle = afro::vec2::SignedAngle(forward, direction.Normalized());
 
-			//transform.rotation += turnAngle * dt;
-			//m_physicsComponent->ApplyTorque(turnAngle);
+			transform.rotation += turnAngle * dt;
+			m_physicsComponent->ApplyTorque(turnAngle);
 			transform.rotation = direction.Angle() + afro::HalfPi;
 			if (std::fabs(turnAngle) < afro::DegreesToRadians(30.0f))
 			{

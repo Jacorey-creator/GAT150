@@ -1,7 +1,6 @@
 #pragma once
 #include "Framework/Game.h"
 #include "Renderer/Text.h"
-#include "Game/Enemy.h"
 #include "Framework/Event/EventManager.h"
 
 namespace afro
@@ -32,7 +31,7 @@ namespace afro
 
 		void OnAddPoints(const afro::Event& event);
 		void OnPlayerDead(const afro::Event& event);
-		friend class afro::Enemy;
+		//friend class afro::Enemy;
 	private:
 		eState m_state = eState::Title;
 		float m_statetimer = 0;

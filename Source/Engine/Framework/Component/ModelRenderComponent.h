@@ -7,6 +7,7 @@ namespace afro {
 	{
 	public:
 		CLASS_DECLARATION(ModelRenderComponent)
+
 		bool Initialize() override;
 		void Update(float dt);
 		void Draw(Renderer& renderer);

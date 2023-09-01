@@ -15,10 +15,8 @@ namespace afro
 		auto iter = m_actors.begin();
 		while (iter != m_actors.end())
 		{
-			if ((*iter)->active)
-			{
-				(*iter)->Update(dt);
-			}
+			(*iter)->Update(dt);
+
 			iter = ((*iter)->destroyed) ? iter = m_actors.erase(iter) : ++iter;
 		}
 		//check collisions
@@ -75,7 +73,7 @@ namespace afro
 		}
 		Read(document);
 
-		return false;
+		return true;
 	}
 	void Scene::Read(const json_t& value)
 	{
@@ -95,8 +93,9 @@ namespace afro
 					Factory::Instance().RegisterPrototype(name,std::move(actor));
 				}
 				else
-
-				Add(std::move(actor));
+				{
+					Add(std::move(actor));
+				}
 			}
 		}
 	}

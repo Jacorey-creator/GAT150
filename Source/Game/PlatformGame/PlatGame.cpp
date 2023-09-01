@@ -23,13 +23,15 @@ namespace afro
 
 	bool PlatGame::Initialize()
 	{
-		afro::setFilePath("PlatformGame");
 		afro::g_audioSystem.AddAudio("hit", "audio/hit.wav");
+		afro::g_audioSystem.AddAudio("music", "audio/Background_Music.ogg");
 
-		m_scene->Load("Platformer/Scenes/PlatformGame.json");
+		m_scene = std::make_unique<Scene>();
+		m_scene->Load("Scenes/PlatformGame.json");
+		m_scene->Load("Scenes/tilemap.json");
 		m_scene->Initialize();
 
-		//m_scene->SetGame(this);
+
 		EVENT_SUBSCRIBE("OnAddPoints", PlatGame::OnAddPoints);
 		EVENT_SUBSCRIBE("OnPlayerDead", PlatGame::OnPlayerDead);
 		return true;
@@ -45,10 +47,17 @@ namespace afro
 		switch (m_state)
 		{
 		case eState::Title:
+		{
+			afro::g_audioSystem.PlayOneShot("music", true);
+			auto actor = INSTANTIATE(Actor, "Crate");
+			actor->Initialize();
+			m_scene->Add(std::move(actor));
+
+
+		}
 			break;
 		case eState::StartGame:
 			m_score = 0;
-			m_lives = 3;
 			m_state = eState::StartLevel;
 			break;
 		case eState::Game:
@@ -76,23 +85,6 @@ namespace afro
 	void PlatGame::Draw(afro::Renderer& renderer)
 	{
 		m_scene->Draw(renderer);
-		if (m_state == eState::Title)
-		{
-			m_titletext->Draw(renderer, 400, 300);
-		}
-
-		if (m_state == eState::GameOver)
-		{
-			m_gameovertext->Draw(renderer, 400, 300);
-		}
-
-		if (deathcount >= 1)
-		{
-			m_deathtext->Draw(renderer, 420, 40);
-		}
-		m_scoretext->Draw(renderer, 40, 40);
-		m_highscoretext->Draw(renderer, 300, 40);
-
 
 	}
 

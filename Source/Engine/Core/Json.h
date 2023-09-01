@@ -4,6 +4,7 @@
 #include "Color.h"
 #include "Math/Rect.h"
 #include "Vector2.h"
+#include <vector>
 
 #define READ_DATA(value, data) afro::Json::Read(value, #data, data)
 #define READ_DATA_REQUIRED(value, data) afro::Json::Read(value, #data, data, true);
@@ -19,12 +20,14 @@ namespace afro
 	public:
 		static bool Load(const std::string& filename, rapidjson::Document& document);
 		static bool Read(const rapidjson::Value& value, const std::string& name, /*returning*/ int& data, bool required = false);
+		static bool Read(const rapidjson::Value& value, const std::string& name, /*returning*/ bool& data, bool required = false);
 		static bool Read(const rapidjson::Value& value, const std::string& name, /*returning*/ float& data, bool required = false);
 		static bool Read(const rapidjson::Value& value, const std::string& name,  /*returning*/ std::string& data, bool required = false);
 		static bool Read(const rapidjson::Value& value, const std::string& name,  /*returning*/ Vector2& data, bool required = false);
 		static bool Read(const rapidjson::Value& value, const std::string& name,  /*returning*/ Color& data, bool required = false);
 		static bool Read(const rapidjson::Value& value, const std::string& name,  /*returning*/ Rect& data, bool required = false);
-		static bool Read(const rapidjson::Value& value, const std::string& name,  /*returning*/ bool& data, bool required = false);
+		static bool Read(const rapidjson::Value& value, const std::string& name,  /*returning*/ std::vector<std::string>& data, bool required = false);
+		static bool Read(const rapidjson::Value& value, const std::string& name,  /*returning*/ std::vector<int>& data, bool required = false);
 	};
 
 	using json_t = rapidjson::Value;

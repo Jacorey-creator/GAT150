@@ -142,6 +142,7 @@
     <ClCompile Include="Components\EnginePhysicsComponent.cpp" />
     <ClCompile Include="Components\SpriteAnimComponent.cpp" />
     <ClCompile Include="Components\SpriteComponent.cpp" />
+    <ClCompile Include="Components\TilemapComponent.cpp" />
     <ClCompile Include="Component\ModelRenderComponent.cpp" />
     <ClCompile Include="Event\EventManager.cpp" />
     <ClCompile Include="Object.cpp" />
@@ -158,6 +159,7 @@
     <ClInclude Include="Components\EnginePhysicsComponent.h" />
     <ClInclude Include="Components\SpriteAnimComponent.h" />
     <ClInclude Include="Components\SpriteComponent.h" />
+    <ClInclude Include="Components\TilemapComponent.h" />
     <ClInclude Include="Component\ModelRenderComponent.h" />
     <ClInclude Include="Component\RenderComponent.h" />
     <ClInclude Include="Event\Event.h" />

@@ -26,7 +26,7 @@ namespace afro
 	bool SpaceGame::Initialize()
 	{
 		//create font
-		m_font = GET_RESOURCE(afro::Font, "Wedgie Regular.ttf", 30);
+		m_font = GET_RESOURCE(afro::Font, "SpaceGame/Font/Wedgie Regular.ttf", 30);
 
 		m_titletext = std::make_unique<afro::Text>(m_font);
 		m_titletext->Create(afro::g_renderer, "Galaxy Intruders", afro::Color{ 1, 1, 1, 1 });
@@ -39,19 +39,16 @@ namespace afro
 
 
 		//load audio
-		afro::g_audioSystem.AddAudio("hit", "hit.wav");
-		afro::g_audioSystem.AddAudio("space", "space_song.wav");
+		afro::g_audioSystem.AddAudio("hit", "SpaeGame/Audio/hit.wav");
+		afro::g_audioSystem.AddAudio("space", "SpaceGame/Audio/space_song.wav");
 
 		//make scene
 		m_scene = std::make_unique<afro::Scene>();
-		m_scene->Load("Scenes/Space.json");
+		m_scene->Load("SpaceGame/Scenes/Space.json");
 		m_scene->Initialize();
 		//add events
 		EVENT_SUBSCRIBE("AddPoints", SpaceGame::OnAddPoints);
 		EVENT_SUBSCRIBE("OnPlayerDead", SpaceGame::OnPlayerDead);
-
-		//afro::EventManager::Instance().Subscribe("AddPoints", this, std::bind(&SpaceGame::OnAddPoints, this, std::placeholders::_1));
-		//afro::EventManager::Instance().Subscribe("OnPlayerDead", this, std::bind(&SpaceGame::OnPlayerDead, this, std::placeholders::_1));
 
 		return true;
 	}
@@ -84,7 +81,7 @@ namespace afro
 		switch (m_state)
 		{
 		case eState::Title:
-			afro::g_audioSystem.PlayOneShot("Audio/space", true);
+			afro::g_audioSystem.PlayOneShot("space", true);
 			if (afro::g_inputSystem.GetKeyDown(SDL_SCANCODE_SPACE))
 			{
 				m_state = eState::StartGame;
@@ -140,7 +137,6 @@ namespace afro
 		case eState::StartLevel:
 			m_scene->RemoveAll(true);
 			m_entities = 0;
-			afro::Game::SetLives(1);
 			{
 				auto player = INSTANTIATE(Player, "Player");
 				player->transform = afro::Transform{ { 400, 300 }, 0, 1 };

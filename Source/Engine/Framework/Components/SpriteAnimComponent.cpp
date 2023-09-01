@@ -10,8 +10,11 @@ namespace afro
 		bool SpriteAnimComponent::Initialize()
 	{
 		SpriteComponent::Initialize();
-		SetSequence(defaultSequenceName);
-		UpdateSource();
+		SetSequence(defaultSequenceName, false);
+		if (source.w == 0 && source.h == 0)
+		{
+			UpdateSource();
+		}
 
 		return true;
 	}
@@ -36,6 +39,11 @@ namespace afro
 	void SpriteAnimComponent::Read(const json_t& value)
 	{
 		SpriteComponent::Read(value);
+
+		READ_DATA(value, paddingtop);
+		READ_DATA(value, paddingbottom);
+		READ_DATA(value, paddingleft);
+		READ_DATA(value, paddingright);
 
 		// read in animation sequences
 		if (HAS_DATA(value, sequences) && GET_DATA(value, sequences).IsArray())
@@ -67,15 +75,18 @@ namespace afro
 		}
 	}
 
-	void SpriteAnimComponent::SetSequence(const std::string name)
+	void SpriteAnimComponent::SetSequence(const std::string name, bool update)
 	{
-		if (m_sequence->name == name) return;
+		if (m_sequence && m_sequence->name == name) return;
+
 		if (m_sequences.find(name) != m_sequences.end())
 		{
 			m_sequence = &m_sequences[name];
 			if (m_sequence->texture) m_texture = m_sequence->texture;
 			frame = m_sequence->startFrame;
 			frametimer = -1.0f / m_sequence->fps;
+
+			if (update) UpdateSource();
 		}
 	}
 
@@ -83,12 +94,12 @@ namespace afro
 	{
 		vec2 cellsize = m_texture->GetSize() / vec2{ m_sequence->numColumns, m_sequence->numRows };
 		int column = (frame - 1) % m_sequence->numColumns;
-		int rows = (frame - 1) % m_sequence->numColumns;
+		int rows = (frame - 1) / m_sequence->numColumns;
 
-		source.x = (int)(column * cellsize.x);
-		source.y = (int)(rows * cellsize.y);
-		source.w = (int)(cellsize.x);
-		source.h = (int)(cellsize.y);
+		source.x = (int)(column * cellsize.x + paddingleft);
+		source.y = (int)(rows * cellsize.y + paddingtop);
+		source.w = (int)(cellsize.x - paddingleft - paddingright);
+		source.h = (int)(cellsize.y - paddingbottom - paddingtop);
 
 	}
 
