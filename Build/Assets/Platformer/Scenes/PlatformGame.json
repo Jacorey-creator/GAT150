@@ -21,6 +21,7 @@
       "type": "Actor",
       "name": "Coin",
       "persistent": true,
+      "prototype": true,
       "transform": {
         "position": [ 200, 10 ],
         "scale": 2,
@@ -145,6 +146,7 @@
           "type": "SpriteComponent",
           "textureName": "Textures/crate.png"
         },
+      
         {
           "type": "Box2DPhysicsComponent",
           "damping": 0,
@@ -160,7 +162,7 @@
       "tag": "Enemy",
       "persistent": true,
       "speed": 10,
-      "jump": 8,
+      
       "transform": {
         "position": [ 500, 30 ],
         "scale": 1,

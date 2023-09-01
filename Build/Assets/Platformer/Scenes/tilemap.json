@@ -3,7 +3,7 @@
 		{
 			"type":"Actor",
 			"name":"tile01",
-			"tag":"Ground",
+			"tag":" Enemy",
 			"prototype":true,
 			"transform":{
 				"scale": 2
@@ -25,7 +25,8 @@
 				},
 				{
 					"type":"Box2DCollisionComponent",
-					"restitution":0
+					"restitution": 0,
+						"isTrigger":  true
 				}
 			]
 		},

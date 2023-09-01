@@ -54,6 +54,7 @@ namespace afro
 		{
 			afro::vec2 up = afro::vec2{ 0, -1 } * dt;
 			m_physicsComponent->SetVelocity( velocity + (up * jump));
+			g_audioSystem.PlayOneShot("hit",false);
 		}
 		if (velocity.y > 0) m_physicsComponent->SetGravityScale(5.0f);
 		else m_physicsComponent->SetGravityScale(3.0f);

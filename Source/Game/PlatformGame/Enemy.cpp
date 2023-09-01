@@ -29,21 +29,39 @@ namespace afro
 	void Enemy::Update(float dt)
 	{
 		Actor::Update(dt);
-		//movement
+		////movement
 
-		//transform.rotation += rotate * m_turnRate * afro::g_time.GetDeltaTime();
+		////transform.rotation += rotate * m_turnRate * afro::g_time.GetDeltaTime();
 
-		afro::vec2 forward = afro::vec2{ 0, -1 }.Rotate(transform.rotation);
+		//Player* player = m_scene->GetActor<Player>();
+		//afro::vec2 forward = afro::vec2{ 0, -1 }.Rotate(transform.rotation);
+
+		//if (player)
+		//{
+
+		//	afro::vec2 direction = player->transform.position - transform.position;
+		//	m_physicsComponent->ApplyForce(direction.Normalized() * m_speed);
+		//}
+
+
+		afro::vec2 forward = afro::vec2{ 0,-1 }.Rotate(transform.rotation);
 		Player* player = m_scene->GetActor<Player>();
-
 		if (player)
 		{
-			afro::vec2 direction = player->transform.position - transform.position;
-			m_physicsComponent->ApplyForce(direction.Normalized() * m_speed);
+			afro::Vector2 direction = player->transform.position - transform.position;
+
+			float turnAngle = afro::vec2::SignedAngle(forward, direction.Normalized());
+
+			transform.rotation += turnAngle * dt;
+			m_physicsComponent->ApplyTorque(turnAngle);
+			transform.rotation = direction.Angle() + afro::HalfPi;
+			if (std::fabs(turnAngle) < afro::DegreesToRadians(30.0f))
+			{
+
+			}
+		m_physicsComponent->ApplyForce(direction.Normalized() * m_speed);
+		transform.position += forward * m_speed * afro::g_time.GetDeltaTime(); 
 		}
-
-		m_physicsComponent->ApplyForce(forward * m_speed);
-
 
 		transform.position.x = afro::Wrap(transform.position.x, (float)afro::g_renderer.GetWidth());
 		transform.position.y = afro::Wrap(transform.position.y, (float)afro::g_renderer.GetHeight());

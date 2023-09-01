@@ -17,6 +17,7 @@
 #include <Framework/Components/CircleCollisionComponent.h>
 
 #include "Framework/Event/EventManager.h"
+#include <Game/Player.h>
 
 namespace afro
 {
@@ -48,11 +49,20 @@ namespace afro
 		{
 		case eState::Title:
 		{
+
 			afro::g_audioSystem.PlayOneShot("music", true);
 			auto actor = INSTANTIATE(Actor, "Crate");
 			actor->Initialize();
 			m_scene->Add(std::move(actor));
+			
+			if (g_inputSystem.GetKeyDown(SDL_SCANCODE_S))
+			{
+				auto actor = INSTANTIATE(Actor, "Coin");
+				actor->Initialize();
+				m_scene->Add(std::move(actor));
 
+
+			}
 
 		}
 			break;
